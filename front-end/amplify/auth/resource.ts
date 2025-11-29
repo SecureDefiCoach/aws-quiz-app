@@ -22,4 +22,10 @@ export const auth = defineAuth({
     },
   },
   accountRecovery: 'EMAIL_ONLY',
+  // For sandbox/development - auto-confirm users
+  senders: {
+    email: {
+      fromEmail: 'noreply@example.com',
+    },
+  },
 });

@@ -45,29 +45,31 @@ interface AppSyncEvent {
  * @param event - AppSync event with query/mutation details
  * @returns Result from the appropriate service function
  */
-export const handler = async (event: AppSyncEvent): Promise<any> => {
-  const requestId = event.request?.headers?.['x-amzn-requestid'] || 'unknown';
+export const handler = async (event: any): Promise<any> => {
+  // Log the entire event to see what we're receiving
+  console.log('Received event:', JSON.stringify(event, null, 2));
+  
+  const requestId = event.request?.headers?.['x-amzn-requestid'] || event.requestId || 'unknown';
   const logger = createLogger(requestId);
   
+  // Handle different event structures
+  const fieldName = event.info?.fieldName || event.fieldName || 'unknown';
+  const args = event.arguments || event.args || {};
+  const userId = event.identity?.sub || event.identity?.claims?.sub || 'unknown';
+  
   logger.logEntry('quiz-resolver', { 
-    fieldName: event.info.fieldName,
-    hasIdentity: !!event.identity 
+    fieldName,
+    hasIdentity: !!userId,
+    eventKeys: Object.keys(event)
   });
   
   try {
-    // Extract user ID from Cognito JWT token
-    const userId = event.identity?.sub;
-    
-    if (!userId) {
+    if (!userId || userId === 'unknown') {
       throw new Error('User not authenticated');
     }
     
     // Get database connection
     const db = await getDatabase(logger);
-    
-    // Route to appropriate handler based on fieldName
-    const fieldName = event.info.fieldName;
-    const args = event.arguments;
     
     let result: any;
     

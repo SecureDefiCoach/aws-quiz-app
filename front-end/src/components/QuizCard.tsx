@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 
-const client = generateClient<Schema>();
-
 interface QuizCardProps {
   sessionId: string;
   onComplete: () => void;
@@ -63,6 +61,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     setSelectedAnswers([]);
 
     try {
+      const client = generateClient<Schema>();
       const { data } = await client.queries.getCurrentQuestion({ sessionId });
       
       if (!data) {
@@ -103,6 +102,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     setError(null);
 
     try {
+      const client = generateClient<Schema>();
       const { data } = await client.mutations.submitAnswer({
         sessionId,
         questionId: question.rowNum.toString(),
