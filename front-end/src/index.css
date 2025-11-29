@@ -188,7 +188,7 @@ button {
 
 /* Quiz Card */
 .quiz-card {
-  max-width: 800px;
+  max-width: 880px;
 }
 
 .quiz-header {
@@ -208,7 +208,7 @@ button {
 .quiz-stats {
   display: flex;
   gap: 1rem;
-  font-size: 1.1rem;
+  font-size: 0.77rem;
 }
 
 .stat-correct {
@@ -244,8 +244,8 @@ button {
 
 .question-text {
   margin: 1.5rem 0;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.5;
   color: #333;
 }
 
@@ -259,7 +259,6 @@ button {
 .option {
   display: flex;
   align-items: center;
-  gap: 1rem;
   padding: 1rem;
   border: 2px solid #ddd;
   border-radius: 8px;
@@ -288,48 +287,18 @@ button {
   background-color: #f8d7da;
 }
 
-.option-letter {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0;
-  border-radius: 50%;
-  font-weight: 600;
-  color: #333;
-}
-
-.option.selected .option-letter {
-  background-color: #ff9900;
-  color: white;
-}
-
-.option.correct .option-letter {
-  background-color: #28a745;
-  color: white;
-}
-
-.option.incorrect .option-letter {
-  background-color: #dc3545;
-  color: white;
-}
-
 .option-text {
   flex: 1;
   line-height: 1.5;
+  font-size: 0.95rem;
 }
 
 .feedback {
   margin: 1.5rem 0;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
-}
-
-.feedback h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
 }
 
 .explanation {
@@ -339,8 +308,8 @@ button {
 
 .progress-stats {
   margin-top: 0.5rem;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-size: 0.63rem;
+  opacity: 0.7;
 }
 
 .quiz-actions {
@@ -368,7 +337,7 @@ button {
 
 /* Explanation Section */
 .explanation-section {
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .explanation-toggle {
@@ -393,17 +362,11 @@ button {
 .explanation {
   margin-top: 0.75rem;
   padding: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: white;
   border-radius: 4px;
-  line-height: 1.6;
-}
-
-.feedback.error .explanation {
-  background-color: rgba(220, 53, 69, 0.1);
-}
-
-.feedback.success .explanation {
-  background-color: rgba(40, 167, 69, 0.1);
+  line-height: 1.5;
+  font-size: 0.95rem;
+  border: 1px solid #dee2e6;
 }
 
 
