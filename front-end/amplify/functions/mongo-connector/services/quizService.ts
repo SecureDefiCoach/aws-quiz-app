@@ -58,6 +58,7 @@ export interface QuestionData {
   sessionCorrect: number;
   sessionWrong: number;
   originalNumber: string;
+  markType: number;
 }
 
 export interface QuestionOption {
@@ -447,6 +448,10 @@ export async function getCurrentQuestion(
     
     const currentQ = session.questions[session.currentIndex];
     
+    // Fetch the actual question from DB to get current markType
+    const questions = db.collection('questions');
+    const questionDoc = await questions.findOne({ _id: new ObjectId(currentQ.questionId) });
+    
     // Shuffle options for display
     const shuffledOptions = shuffleArray(currentQ.options) as QuestionOption[];
     
@@ -463,7 +468,8 @@ export async function getCurrentQuestion(
       countWrong: currentQ.countWrong,
       sessionCorrect: session.correctCount,
       sessionWrong: session.wrongCount,
-      originalNumber: currentQ.originalNumber
+      originalNumber: currentQ.originalNumber,
+      markType: questionDoc?.markType || 0
     };
     
     logger.logExit('getCurrentQuestion', { questionNumber: result.questionNumber });
@@ -665,6 +671,43 @@ export async function markAsMastered(
     
   } catch (error) {
     logger.logError('markAsMastered', error as Error);
+    throw error;
+  }
+}
+
+
+/**
+ * Sets the mark type for a question
+ * 
+ * @param db - MongoDB database instance
+ * @param userId - Cognito user ID (for authorization)
+ * @param questionId - Question identifier
+ * @param markType - Mark type (0=None, 1=Mark, 2=CreateMore, 3=Lab)
+ * @param logger - Logger instance
+ * @returns Success boolean
+ */
+export async function setQuestionMark(
+  db: Db,
+  userId: string,
+  questionId: string,
+  markType: number,
+  logger: Logger
+): Promise<boolean> {
+  logger.logEntry('setQuestionMark', { userId, questionId, markType });
+  
+  try {
+    const questions = db.collection('questions');
+    
+    await questions.updateOne(
+      { _id: new ObjectId(questionId) },
+      { $set: { markType } }
+    );
+    
+    logger.logExit('setQuestionMark', { success: true });
+    return true;
+    
+  } catch (error) {
+    logger.logError('setQuestionMark', error as Error);
     throw error;
   }
 }

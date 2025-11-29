@@ -21,6 +21,9 @@ const QuestionSchema = new mongoose.Schema({
     explanation: { type: String },
     originalNumber: { type: String },
     
+    // --- MARKING SYSTEM ---
+    markType: { type: Number, default: 0 }, // 0=None, 1=Mark, 2=CreateMore, 3=Lab
+    
     // --- STATIC METADATA ---
     isMaster: { type: Boolean, default: false }, 
     createdDate: { type: Date, default: Date.now }

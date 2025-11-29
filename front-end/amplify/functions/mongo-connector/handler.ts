@@ -17,6 +17,7 @@ import {
   getCurrentQuestion,
   submitAnswer,
   markAsMastered,
+  setQuestionMark,
 } from './services/quizService';
 
 /**
@@ -114,6 +115,10 @@ export const handler = async (event: any): Promise<any> => {
         
       case 'markAsMastered':
         result = await markAsMastered(db, userId, args.questionId, logger);
+        break;
+      
+      case 'setQuestionMark':
+        result = await setQuestionMark(db, userId, args.questionId, args.markType, logger);
         break;
         
       default:
