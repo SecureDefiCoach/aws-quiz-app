@@ -5,7 +5,9 @@ import type { Schema } from '../../amplify/data/resource';
 const client = generateClient<Schema>();
 
 export default function Dashboard() {
-  const [examNumber, setExamNumber] = useState<string>('ALL');
+  const [examNumber, setExamNumber] = useState<string>(() => {
+    return localStorage.getItem('lastExamNumber') || 'ALL';
+  });
   const [exams, setExams] = useState<any[]>([]);
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (examNumber) {
       loadStats();
+      localStorage.setItem('lastExamNumber', examNumber);
     }
   }, [examNumber]);
 

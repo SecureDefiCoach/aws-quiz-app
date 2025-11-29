@@ -17,8 +17,12 @@ interface SubDomain {
 function QuizBuilder() {
   const [exams, setExams] = useState<Exam[]>([]);
   const [subdomains, setSubdomains] = useState<SubDomain[]>([]);
-  const [selectedExam, setSelectedExam] = useState('');
-  const [selectedSubdomain, setSelectedSubdomain] = useState('');
+  const [selectedExam, setSelectedExam] = useState(() => {
+    return localStorage.getItem('lastExamNumber') || '';
+  });
+  const [selectedSubdomain, setSelectedSubdomain] = useState(() => {
+    return localStorage.getItem('lastSubdomain') || '';
+  });
   const [selectedStates, setSelectedStates] = useState<string[]>(['NEW', 'WRONG']);
   const [maxQuestions, setMaxQuestions] = useState(10);
   const [questionCount, setQuestionCount] = useState(0);
@@ -39,11 +43,19 @@ function QuizBuilder() {
   useEffect(() => {
     if (selectedExam) {
       loadSubdomains(selectedExam);
+      localStorage.setItem('lastExamNumber', selectedExam);
     } else {
       setSubdomains([]);
       setSelectedSubdomain('');
     }
   }, [selectedExam]);
+
+  // Save subdomain selection
+  useEffect(() => {
+    if (selectedSubdomain) {
+      localStorage.setItem('lastSubdomain', selectedSubdomain);
+    }
+  }, [selectedSubdomain]);
 
   // Update question count when filters change
   useEffect(() => {
