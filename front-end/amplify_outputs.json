@@ -339,6 +339,138 @@
               "attributes": []
             }
           }
+        },
+        "SubdomainStats": {
+          "name": "SubdomainStats",
+          "fields": {
+            "subDomain": {
+              "name": "subDomain",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "domainName": {
+              "name": "domainName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "new": {
+              "name": "new",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "right": {
+              "name": "right",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "wrong": {
+              "name": "wrong",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "mastered": {
+              "name": "mastered",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "total": {
+              "name": "total",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "DashboardTotals": {
+          "name": "DashboardTotals",
+          "fields": {
+            "new": {
+              "name": "new",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "right": {
+              "name": "right",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "wrong": {
+              "name": "wrong",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "mastered": {
+              "name": "mastered",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "total": {
+              "name": "total",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "DashboardStats": {
+          "name": "DashboardStats",
+          "fields": {
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "examName": {
+              "name": "examName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "subdomains": {
+              "name": "subdomains",
+              "isArray": true,
+              "type": {
+                "nonModel": "SubdomainStats"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": false
+            },
+            "totals": {
+              "name": "totals",
+              "isArray": false,
+              "type": {
+                "nonModel": "DashboardTotals"
+              },
+              "isRequired": true,
+              "attributes": []
+            }
+          }
         }
       },
       "queries": {
@@ -449,6 +581,22 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true
+            }
+          }
+        },
+        "getDashboardStats": {
+          "name": "getDashboardStats",
+          "isArray": false,
+          "type": {
+            "nonModel": "DashboardStats"
+          },
+          "isRequired": false,
+          "arguments": {
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false
             }
           }
         }

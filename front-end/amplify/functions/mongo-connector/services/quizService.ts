@@ -779,19 +779,19 @@ export async function getDashboardStats(
       progressMap.set(p.questionId.toString(), p);
     });
     
-    // Group by subdomain
+    // Group by subdomain number
     const subdomainMap = new Map<string, SubdomainStats>();
     
     allQuestions.forEach(question => {
-      const subDomain = question.subDomain || 'Unknown';
-      const domainName = question.domainName || subDomain;
+      const subDomainNum = question.subDomainNum || 'Unknown';
+      const subDomainName = question.subDomain || 'Unknown';
       const progress = progressMap.get(question._id.toString());
       const state = progress?.state || 'NEW';
       
-      if (!subdomainMap.has(subDomain)) {
-        subdomainMap.set(subDomain, {
-          subDomain,
-          domainName,
+      if (!subdomainMap.has(subDomainNum)) {
+        subdomainMap.set(subDomainNum, {
+          subDomain: subDomainNum,
+          domainName: subDomainName,
           new: 0,
           right: 0,
           wrong: 0,
@@ -800,7 +800,7 @@ export async function getDashboardStats(
         });
       }
       
-      const stats = subdomainMap.get(subDomain)!;
+      const stats = subdomainMap.get(subDomainNum)!;
       stats.total++;
       
       switch (state) {
