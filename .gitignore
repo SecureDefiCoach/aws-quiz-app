@@ -47,3 +47,7 @@ coverage/
 # Misc
 *.bak
 *.tmp
+
+# Private question data
+data/
+*.csv
