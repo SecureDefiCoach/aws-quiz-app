@@ -1,0 +1,3 @@
+{"level":"info","message":"Database connected successfully to MongoDB Atlas.","timestamp":"2025-11-28 14:34:53"}
+{"level":"info","message":"Server listening on port 3000.","timestamp":"2025-11-28 14:34:53"}
+{"level":"info","message":"Running in development mode.","timestamp":"2025-11-28 14:34:53"}
