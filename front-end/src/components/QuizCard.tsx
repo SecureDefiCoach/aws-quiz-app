@@ -52,6 +52,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
   const [showExplanation, setShowExplanation] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [markType, setMarkType] = useState(0);
+  const [questionExpanded, setQuestionExpanded] = useState(true);
 
   useEffect(() => {
     loadQuestion();
@@ -227,8 +228,16 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
           )}
         </div>
 
-        <div className="question-text">
-          <p>{question.question}</p>
+        <div className="question-text-container">
+          <div className={`question-text ${questionExpanded ? '' : 'collapsed'}`}>
+            <p>{question.question}</p>
+          </div>
+          <button 
+            className="question-toggle"
+            onClick={() => setQuestionExpanded(!questionExpanded)}
+          >
+            {questionExpanded ? '▲ Collapse' : '▼ Expand'}
+          </button>
         </div>
 
         <div className="options">
@@ -252,24 +261,6 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
             </div>
           ))}
         </div>
-
-        {feedback && (
-          <div className="feedback">
-            {feedback.explanation && (
-              <div className="explanation-section">
-                <button 
-                  className="explanation-toggle"
-                  onClick={() => setShowExplanation(!showExplanation)}
-                >
-                  {showExplanation ? '▼ HIDE EXPLANATION' : '▶ SHOW EXPLANATION'}
-                </button>
-                {showExplanation && (
-                  <p className="explanation">{feedback.explanation}</p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
 
         {error && <div className="error">{error}</div>}
 
@@ -300,22 +291,31 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
           )}
         </div>
 
+        {feedback && (
+          <div className="feedback">
+            {feedback.explanation && (
+              <div className="explanation-section">
+                <button 
+                  className="explanation-toggle"
+                  onClick={() => setShowExplanation(!showExplanation)}
+                >
+                  {showExplanation ? '▼ HIDE EXPLANATION' : '▶ SHOW EXPLANATION'}
+                </button>
+                {showExplanation && (
+                  <p className="explanation">{feedback.explanation}</p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="question-marking">
           <label className="mark-option">
             <input
               type="radio"
               name="markType"
-              checked={markType === 0}
-              onChange={() => handleMarkChange(0)}
-            />
-            <span>None</span>
-          </label>
-          <label className="mark-option">
-            <input
-              type="radio"
-              name="markType"
               checked={markType === 1}
-              onChange={() => handleMarkChange(1)}
+              onChange={() => handleMarkChange(markType === 1 ? 0 : 1)}
             />
             <span>Mark</span>
           </label>
@@ -324,7 +324,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
               type="radio"
               name="markType"
               checked={markType === 2}
-              onChange={() => handleMarkChange(2)}
+              onChange={() => handleMarkChange(markType === 2 ? 0 : 2)}
             />
             <span>Additional</span>
           </label>
@@ -333,7 +333,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
               type="radio"
               name="markType"
               checked={markType === 3}
-              onChange={() => handleMarkChange(3)}
+              onChange={() => handleMarkChange(markType === 3 ? 0 : 3)}
             />
             <span>Lab</span>
           </label>
