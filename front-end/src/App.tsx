@@ -7,7 +7,10 @@ function App() {
       {({ signOut, user }) => (
         <div className="app">
           <header className="app-header">
-            <h1>AWS Quiz App</h1>
+            <div className="app-title">
+              <h1>ERT</h1>
+              <span className="app-subtitle">Exam Readiness Tracker</span>
+            </div>
             <div className="user-info">
               <span>Welcome, {user?.signInDetails?.loginId}</span>
               <button onClick={signOut} className="btn-secondary">Sign Out</button>
