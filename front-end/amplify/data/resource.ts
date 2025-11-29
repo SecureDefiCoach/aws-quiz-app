@@ -69,6 +69,31 @@ const schema = a.schema({
     summary: a.ref('QuizSummary'),
   }),
   
+  SubdomainStats: a.customType({
+    subDomain: a.string().required(),
+    domainName: a.string().required(),
+    new: a.integer().required(),
+    right: a.integer().required(),
+    wrong: a.integer().required(),
+    mastered: a.integer().required(),
+    total: a.integer().required(),
+  }),
+  
+  DashboardTotals: a.customType({
+    new: a.integer().required(),
+    right: a.integer().required(),
+    wrong: a.integer().required(),
+    mastered: a.integer().required(),
+    total: a.integer().required(),
+  }),
+  
+  DashboardStats: a.customType({
+    examNumber: a.string().required(),
+    examName: a.string().required(),
+    subdomains: a.ref('SubdomainStats').array().required(),
+    totals: a.ref('DashboardTotals').required(),
+  }),
+  
   // ============================================================================
   // QUERIES
   // ============================================================================
@@ -109,6 +134,12 @@ const schema = a.schema({
   getCurrentQuestion: a.query()
     .arguments({ sessionId: a.id().required() })
     .returns(a.ref('QuestionData'))
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
+  getDashboardStats: a.query()
+    .arguments({ examNumber: a.string() })
+    .returns(a.ref('DashboardStats'))
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),
   

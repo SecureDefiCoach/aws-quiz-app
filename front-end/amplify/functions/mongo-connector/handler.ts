@@ -18,6 +18,7 @@ import {
   submitAnswer,
   markAsMastered,
   setQuestionMark,
+  getDashboardStats,
 } from './services/quizService';
 
 /**
@@ -119,6 +120,10 @@ export const handler = async (event: any): Promise<any> => {
       
       case 'setQuestionMark':
         result = await setQuestionMark(db, userId, args.questionId, args.markType, logger);
+        break;
+      
+      case 'getDashboardStats':
+        result = await getDashboardStats(db, userId, args.examNumber || 'ALL', logger);
         break;
         
       default:
