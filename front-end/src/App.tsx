@@ -18,13 +18,23 @@ function App() {
               <span className="app-subtitle">Exam Readiness Tracker</span>
             </div>
             <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <button
-                onClick={() => setCurrentView('quiz')}
-                className="btn-primary"
-                style={{ padding: '0.5rem 1rem' }}
-              >
-                Start Quiz
-              </button>
+              {currentView === 'quiz' ? (
+                <button
+                  onClick={() => setCurrentView('dashboard')}
+                  className="btn-secondary"
+                  style={{ padding: '0.5rem 1rem' }}
+                >
+                  ← Dashboard
+                </button>
+              ) : (
+                <button
+                  onClick={() => setCurrentView('quiz')}
+                  className="btn-primary"
+                  style={{ padding: '0.5rem 1rem' }}
+                >
+                  Start Quiz
+                </button>
+              )}
             </nav>
             <div className="user-info">
               <span>Welcome, {user?.signInDetails?.loginId}</span>
