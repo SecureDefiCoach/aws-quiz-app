@@ -19,18 +19,11 @@ function App() {
             </div>
             <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               <button
-                onClick={() => setCurrentView('dashboard')}
-                className={currentView === 'dashboard' ? 'btn-primary' : 'btn-secondary'}
-                style={{ padding: '0.5rem 1rem' }}
-              >
-                Dashboard
-              </button>
-              <button
                 onClick={() => setCurrentView('quiz')}
-                className={currentView === 'quiz' ? 'btn-primary' : 'btn-secondary'}
+                className="btn-primary"
                 style={{ padding: '0.5rem 1rem' }}
               >
-                Quiz
+                Start Quiz
               </button>
             </nav>
             <div className="user-info">
@@ -40,7 +33,7 @@ function App() {
           </header>
           <main className="app-main">
             {currentView === 'dashboard' ? (
-              <Dashboard onStartQuiz={() => setCurrentView('quiz')} />
+              <Dashboard />
             ) : (
               <QuizBuilder />
             )}

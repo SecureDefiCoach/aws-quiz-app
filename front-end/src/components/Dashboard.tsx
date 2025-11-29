@@ -4,11 +4,7 @@ import type { Schema } from '../../amplify/data/resource';
 
 const client = generateClient<Schema>();
 
-interface DashboardProps {
-  onStartQuiz: () => void;
-}
-
-export default function Dashboard({ onStartQuiz }: DashboardProps) {
+export default function Dashboard() {
   const [examNumber, setExamNumber] = useState<string>('ALL');
   const [exams, setExams] = useState<any[]>([]);
   const [stats, setStats] = useState<any>(null);
@@ -54,14 +50,9 @@ export default function Dashboard({ onStartQuiz }: DashboardProps) {
     return Math.round((mastered / total) * 100);
   };
 
-  const getStateColor = (state: string) => {
-    switch (state) {
-      case 'new': return '#94a3b8';
-      case 'right': return '#22c55e';
-      case 'wrong': return '#ef4444';
-      case 'mastered': return '#3b82f6';
-      default: return '#64748b';
-    }
+  const getDomainNumber = (subDomain: string): number => {
+    const match = subDomain.match(/^(\d+)\./);
+    return match ? parseInt(match[1]) : 0;
   };
 
   if (loading) {
@@ -81,38 +72,14 @@ export default function Dashboard({ onStartQuiz }: DashboardProps) {
   }
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '2rem'
-      }}>
-        <h1 style={{ margin: 0 }}>Progress Dashboard</h1>
-        <button
-          onClick={onStartQuiz}
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            fontWeight: '500'
-          }}
-        >
-          Start Quiz
-        </button>
-      </div>
-
+    <div style={{ padding: '1rem', maxWidth: '1200px', margin: '0 auto' }}>
       {/* Exam Filter */}
-      <div style={{ marginBottom: '2rem' }}>
+      <div style={{ marginBottom: '1rem' }}>
         <label style={{ 
-          display: 'block', 
-          marginBottom: '0.5rem',
-          fontWeight: '500'
+          display: 'inline-block', 
+          marginRight: '0.5rem',
+          fontWeight: '500',
+          fontSize: '0.875rem'
         }}>
           Filter by Exam:
         </label>
@@ -120,11 +87,10 @@ export default function Dashboard({ onStartQuiz }: DashboardProps) {
           value={examNumber}
           onChange={(e) => setExamNumber(e.target.value)}
           style={{
-            padding: '0.75rem',
-            fontSize: '1rem',
+            padding: '0.5rem',
+            fontSize: '0.875rem',
             border: '1px solid #d1d5db',
-            borderRadius: '8px',
-            width: '300px',
+            borderRadius: '6px',
             backgroundColor: 'white'
           }}
         >
@@ -137,231 +103,232 @@ export default function Dashboard({ onStartQuiz }: DashboardProps) {
         </select>
       </div>
 
-      {/* Overall Progress */}
-      <div style={{
-        backgroundColor: 'white',
-        padding: '1.5rem',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        marginBottom: '2rem'
-      }}>
-        <h2 style={{ marginTop: 0, marginBottom: '1rem' }}>{stats.examName}</h2>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-          gap: '1rem'
-        }}>
-          <div>
-            <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '0.25rem' }}>
-              Total Questions
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-              {stats.totals.total}
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '0.25rem' }}>
-              Mastered
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#3b82f6' }}>
-              {stats.totals.mastered}
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '0.25rem' }}>
-              Progress
-            </div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-              {getProgressPercentage(stats.totals.mastered, stats.totals.total)}%
-            </div>
-          </div>
-        </div>
-        
-        {/* Progress Bar */}
-        <div style={{ marginTop: '1rem' }}>
-          <div style={{
-            height: '8px',
-            backgroundColor: '#e5e7eb',
-            borderRadius: '4px',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              height: '100%',
-              width: `${getProgressPercentage(stats.totals.mastered, stats.totals.total)}%`,
-              backgroundColor: '#3b82f6',
-              transition: 'width 0.3s ease'
-            }} />
-          </div>
-        </div>
-      </div>
-
       {/* Subdomain Breakdown */}
       <div style={{
         backgroundColor: 'white',
-        borderRadius: '12px',
+        borderRadius: '8px',
         boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginBottom: '1.5rem',
+        display: 'inline-block',
+        minWidth: 'auto'
       }}>
         <div style={{ 
-          padding: '1.5rem',
-          borderBottom: '1px solid #e5e7eb'
+          padding: '0.75rem 1rem',
+          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: '#f9fafb'
         }}>
-          <h2 style={{ margin: 0 }}>Subdomain Breakdown</h2>
+          <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: '600' }}>{stats.examName}</h2>
         </div>
         
         <div style={{ overflowX: 'auto' }}>
           <table style={{ 
-            width: '100%', 
+            width: 'auto', 
             borderCollapse: 'collapse',
             fontSize: '0.875rem'
           }}>
             <thead>
-              <tr style={{ backgroundColor: '#f9fafb' }}>
+              <tr style={{ backgroundColor: '#ef4444', color: 'white' }}>
                 <th style={{ 
-                  padding: '0.75rem 1rem', 
-                  textAlign: 'left',
-                  fontWeight: '600',
-                  color: '#374151'
-                }}>
-                  Subdomain
-                </th>
-                <th style={{ 
-                  padding: '0.75rem 1rem', 
-                  textAlign: 'left',
-                  fontWeight: '600',
-                  color: '#374151'
-                }}>
-                  Domain Name
-                </th>
-                <th style={{ 
-                  padding: '0.75rem 1rem', 
+                  padding: '0.4rem 0.2rem', 
                   textAlign: 'center',
                   fontWeight: '600',
-                  color: '#94a3b8'
+                  fontSize: '0.75rem',
+                  width: '60px',
+                  minWidth: '60px',
+                  maxWidth: '60px'
+                }}>
+                  ID
+                </th>
+                <th style={{ 
+                  padding: '0.4rem 0.5rem', 
+                  textAlign: 'left',
+                  fontWeight: '600',
+                  fontSize: '0.75rem',
+                  width: '200px'
+                }}>
+                  Domain
+                </th>
+                <th style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontWeight: '600',
+                  fontSize: '0.75rem',
+                  width: '60px',
+                  minWidth: '60px',
+                  maxWidth: '60px'
                 }}>
                   New
                 </th>
                 <th style={{ 
-                  padding: '0.75rem 1rem', 
+                  padding: '0.4rem 0.2rem', 
                   textAlign: 'center',
                   fontWeight: '600',
-                  color: '#22c55e'
+                  fontSize: '0.75rem',
+                  width: '60px',
+                  minWidth: '60px',
+                  maxWidth: '60px'
                 }}>
                   Right
                 </th>
                 <th style={{ 
-                  padding: '0.75rem 1rem', 
+                  padding: '0.4rem 0.2rem', 
                   textAlign: 'center',
                   fontWeight: '600',
-                  color: '#ef4444'
+                  fontSize: '0.75rem',
+                  width: '60px',
+                  minWidth: '60px',
+                  maxWidth: '60px'
                 }}>
                   Wrong
                 </th>
                 <th style={{ 
-                  padding: '0.75rem 1rem', 
+                  padding: '0.4rem 0.2rem', 
                   textAlign: 'center',
                   fontWeight: '600',
-                  color: '#3b82f6'
+                  fontSize: '0.75rem',
+                  width: '60px',
+                  minWidth: '60px',
+                  maxWidth: '60px'
                 }}>
                   Mastered
                 </th>
                 <th style={{ 
-                  padding: '0.75rem 1rem', 
+                  padding: '0.4rem 0.2rem', 
                   textAlign: 'center',
                   fontWeight: '600',
-                  color: '#374151'
+                  fontSize: '0.75rem',
+                  width: '70px',
+                  minWidth: '70px',
+                  maxWidth: '70px'
                 }}>
-                  Total
-                </th>
-                <th style={{ 
-                  padding: '0.75rem 1rem', 
-                  textAlign: 'center',
-                  fontWeight: '600',
-                  color: '#374151'
-                }}>
-                  Progress
+                  Complete
                 </th>
               </tr>
             </thead>
             <tbody>
-              {stats.subdomains.map((subdomain: any, index: number) => (
-                <tr 
-                  key={subdomain.subDomain}
-                  style={{ 
-                    borderBottom: '1px solid #e5e7eb',
-                    backgroundColor: index % 2 === 0 ? 'white' : '#f9fafb'
-                  }}
-                >
-                  <td style={{ padding: '0.75rem 1rem', fontWeight: '500' }}>
-                    {subdomain.subDomain}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    {subdomain.domainName}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                    {subdomain.new}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                    {subdomain.right}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                    {subdomain.wrong}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: '600' }}>
-                    {subdomain.mastered}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center', fontWeight: '600' }}>
-                    {subdomain.total}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                    <div style={{ 
-                      display: 'inline-block',
+              {stats.subdomains.map((subdomain: any, index: number) => {
+                const currentDomain = getDomainNumber(subdomain.subDomain);
+                const prevDomain = index > 0 ? getDomainNumber(stats.subdomains[index - 1].subDomain) : currentDomain;
+                const isNewDomain = currentDomain !== prevDomain;
+                
+                return (
+                  <tr 
+                    key={subdomain.subDomain}
+                    style={{ 
+                      borderBottom: '1px solid #e5e7eb',
+                      borderTop: isNewDomain ? '2px solid #9ca3af' : 'none',
+                      backgroundColor: index % 2 === 0 ? 'white' : '#f9fafb'
+                    }}
+                  >
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontWeight: '600',
+                      fontSize: '0.7rem'
+                    }}>
+                      {subdomain.subDomain}
+                    </td>
+                    <td style={{ 
                       padding: '0.25rem 0.5rem',
-                      borderRadius: '4px',
-                      backgroundColor: '#eff6ff',
-                      color: '#3b82f6',
-                      fontWeight: '600'
+                      fontSize: '0.7rem',
+                      maxWidth: '200px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {subdomain.domainName.length > 40 
+                        ? subdomain.domainName.substring(0, 40) + '...' 
+                        : subdomain.domainName}
+                    </td>
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontSize: '0.7rem'
+                    }}>
+                      {subdomain.new}
+                    </td>
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontSize: '0.7rem'
+                    }}>
+                      {subdomain.right}
+                    </td>
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontSize: '0.7rem'
+                    }}>
+                      {subdomain.wrong}
+                    </td>
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontWeight: '600',
+                      fontSize: '0.7rem'
+                    }}>
+                      {subdomain.mastered}
+                    </td>
+                    <td style={{ 
+                      padding: '0.25rem 0.2rem', 
+                      textAlign: 'center',
+                      fontWeight: '600',
+                      fontSize: '0.7rem',
+                      backgroundColor: '#e5e7eb'
                     }}>
                       {getProgressPercentage(subdomain.mastered, subdomain.total)}%
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                );
+              })}
               
               {/* Totals Row */}
               <tr style={{ 
-                backgroundColor: '#f3f4f6',
-                fontWeight: '600'
+                backgroundColor: '#9ca3af',
+                fontWeight: '700',
+                borderTop: '2px solid #374151'
               }}>
-                <td colSpan={2} style={{ padding: '0.75rem 1rem' }}>
-                  TOTALS
+                <td colSpan={2} style={{ 
+                  padding: '0.4rem 0.5rem',
+                  fontSize: '0.7rem'
+                }}>
+                  Totals
                 </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
+                <td style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontSize: '0.7rem'
+                }}>
                   {stats.totals.new}
                 </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
+                <td style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontSize: '0.7rem'
+                }}>
                   {stats.totals.right}
                 </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
+                <td style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontSize: '0.7rem'
+                }}>
                   {stats.totals.wrong}
                 </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
+                <td style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontSize: '0.7rem'
+                }}>
                   {stats.totals.mastered}
                 </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                  {stats.totals.total}
-                </td>
-                <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
-                  <div style={{ 
-                    display: 'inline-block',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    backgroundColor: '#dbeafe',
-                    color: '#1e40af',
-                    fontWeight: '600'
-                  }}>
-                    {getProgressPercentage(stats.totals.mastered, stats.totals.total)}%
-                  </div>
+                <td style={{ 
+                  padding: '0.4rem 0.2rem', 
+                  textAlign: 'center',
+                  fontSize: '0.7rem'
+                }}>
+                  {getProgressPercentage(stats.totals.mastered, stats.totals.total)}%
                 </td>
               </tr>
             </tbody>
