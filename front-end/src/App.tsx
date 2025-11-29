@@ -37,7 +37,7 @@ function App() {
               )}
             </nav>
             <div className="user-info">
-              <span>Welcome, {user?.signInDetails?.loginId}</span>
+              <span>Welcome, {user?.username || user?.signInDetails?.loginId?.split('@')[0]}</span>
               <button onClick={signOut} className="btn-secondary">Sign Out</button>
             </div>
           </header>
