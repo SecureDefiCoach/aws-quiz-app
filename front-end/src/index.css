@@ -252,11 +252,46 @@ button {
   font-weight: 600;
 }
 
-.question-text {
+.question-text-container {
   margin: 1.5rem 0;
+}
+
+.question-text {
   font-size: 1rem;
   line-height: 1.5;
   color: #333;
+  transition: max-height 0.3s ease;
+}
+
+.question-text.collapsed {
+  max-height: 4.5em; /* 3 lines at 1.5 line-height */
+  overflow: hidden;
+  position: relative;
+}
+
+.question-text.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 1.5em;
+  background: linear-gradient(to bottom, transparent, white);
+}
+
+.question-toggle {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.question-toggle:hover {
+  text-decoration: underline;
 }
 
 .options {
