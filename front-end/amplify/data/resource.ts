@@ -49,6 +49,7 @@ const schema = a.schema({
     sessionCorrect: a.integer().required(),
     sessionWrong: a.integer().required(),
     originalNumber: a.string().required(),
+    markType: a.integer().required(),
   }),
   
   QuizSummary: a.customType({
@@ -127,6 +128,15 @@ const schema = a.schema({
   
   markAsMastered: a.mutation()
     .arguments({ questionId: a.id().required() })
+    .returns(a.boolean())
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
+  setQuestionMark: a.mutation()
+    .arguments({ 
+      questionId: a.id().required(),
+      markType: a.integer().required()
+    })
     .returns(a.boolean())
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),

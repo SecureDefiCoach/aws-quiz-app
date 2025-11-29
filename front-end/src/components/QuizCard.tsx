@@ -51,6 +51,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
   const [error, setError] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [markType, setMarkType] = useState(0);
 
   useEffect(() => {
     loadQuestion();
@@ -73,6 +74,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       }
 
       setQuestion(data);
+      setMarkType(data.markType || 0);
     } catch (err) {
       console.error('Error loading question:', err);
       setError('Failed to load question');
@@ -129,6 +131,40 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       setShowSummary(true);
     } else {
       loadQuestion();
+    }
+  };
+
+  const handleMarkChange = async (newMarkType: number) => {
+    if (!question) return;
+    
+    setMarkType(newMarkType);
+    
+    try {
+      const client = generateClient<Schema>();
+      await client.mutations.setQuestionMark({
+        questionId: question.rowNum.toString(),
+        markType: newMarkType,
+      });
+    } catch (err) {
+      console.error('Error setting mark:', err);
+      // Revert on error
+      setMarkType(question.markType);
+    }
+  };
+
+  const handleMarkAsMastered = async () => {
+    if (!question) return;
+    
+    try {
+      const client = generateClient<Schema>();
+      await client.mutations.markAsMastered({
+        questionId: question.rowNum.toString(),
+      });
+      // Move to next question
+      loadQuestion();
+    } catch (err) {
+      console.error('Error marking as mastered:', err);
+      setError('Failed to mark as mastered');
     }
   };
 
@@ -225,7 +261,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
                   className="explanation-toggle"
                   onClick={() => setShowExplanation(!showExplanation)}
                 >
-                  {showExplanation ? '▼' : '▶'} Explanation
+                  {showExplanation ? '▼ HIDE EXPLANATION' : '▶ SHOW EXPLANATION'}
                 </button>
                 {showExplanation && (
                   <p className="explanation">{feedback.explanation}</p>
@@ -238,19 +274,69 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
         {error && <div className="error">{error}</div>}
 
         <div className="quiz-actions">
-          {!feedback ? (
-            <button
-              className="btn-primary"
-              onClick={handleSubmit}
-              disabled={loading || selectedAnswers.length === 0}
+          <button
+            className="btn-primary"
+            onClick={handleSubmit}
+            disabled={loading || selectedAnswers.length === 0 || !!feedback}
+            style={{ opacity: feedback ? 0.5 : 1 }}
+          >
+            {loading ? 'Submitting...' : '✓ Submit Answer'}
+          </button>
+          <button 
+            className="btn-success" 
+            onClick={handleNext}
+            disabled={!feedback}
+            style={{ opacity: !feedback ? 0.5 : 1 }}
+          >
+            → Next Question
+          </button>
+          {question.countRight > question.countWrong && (
+            <button 
+              className="btn-mastered" 
+              onClick={handleMarkAsMastered}
             >
-              {loading ? 'Submitting...' : 'Submit Answer'}
-            </button>
-          ) : (
-            <button className="btn-primary" onClick={handleNext}>
-              {feedback.isComplete ? 'View Results' : 'Next Question'}
+              ⭐ Set as Mastered
             </button>
           )}
+        </div>
+
+        <div className="question-marking">
+          <label className="mark-option">
+            <input
+              type="radio"
+              name="markType"
+              checked={markType === 0}
+              onChange={() => handleMarkChange(0)}
+            />
+            <span>None</span>
+          </label>
+          <label className="mark-option">
+            <input
+              type="radio"
+              name="markType"
+              checked={markType === 1}
+              onChange={() => handleMarkChange(1)}
+            />
+            <span>Mark</span>
+          </label>
+          <label className="mark-option">
+            <input
+              type="radio"
+              name="markType"
+              checked={markType === 2}
+              onChange={() => handleMarkChange(2)}
+            />
+            <span>Additional</span>
+          </label>
+          <label className="mark-option">
+            <input
+              type="radio"
+              name="markType"
+              checked={markType === 3}
+              onChange={() => handleMarkChange(3)}
+            />
+            <span>Lab</span>
+          </label>
         </div>
 
         {question.originalNumber && (
