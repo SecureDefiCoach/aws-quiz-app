@@ -220,3 +220,49 @@ This spec covers the migration of a stateful quiz application from Google Apps S
 3. WHEN retrieving questions, THE Quiz System SHALL include all metadata fields for display and filtering
 4. WHEN database operations fail, THE Quiz System SHALL return appropriate error messages with context
 5. WHEN concurrent updates occur, THE Quiz System SHALL use row-level locking to prevent race conditions
+
+
+### Requirement 16: Question Import and Management
+
+**User Story:** As a content administrator, I want to import new exam question banks from CSV files, so that I can add CompTIA+, ISACA, and other certification exams without affecting existing question data.
+
+#### Acceptance Criteria
+
+1. WHEN an administrator provides a CSV file, THE Quiz System SHALL validate the CSV format matches the required template
+2. WHEN importing questions, THE Quiz System SHALL support append mode to add new questions without deleting existing ones
+3. WHEN importing questions, THE Quiz System SHALL support replace mode to update questions for a specific exam
+4. WHEN a CSV is uploaded, THE Quiz System SHALL validate required fields (question, options A-D, answer, examNumber, examName, subDomain)
+5. WHEN validation fails, THE Quiz System SHALL provide clear error messages indicating which rows and fields are invalid
+6. WHEN importing questions, THE Quiz System SHALL preserve existing user progress data for unchanged questions
+7. WHEN a CSV template is requested, THE Quiz System SHALL provide a downloadable template with column headers and example data
+8. WHEN questions are imported, THE Quiz System SHALL log the import operation with timestamp, user, exam, and question count
+9. WHEN importing via web UI, THE Quiz System SHALL show progress indicator and success/failure summary
+10. WHEN importing via CLI, THE Quiz System SHALL accept command-line arguments for file path, mode (append/replace), and exam filter
+
+**Phase:** Phase 2 (after authentication, dashboard, and public deployment are complete)
+
+
+### Requirement 17: Offline Quiz Resilience
+
+**User Story:** As a quiz user, I want to complete an active quiz session even if my internet connection drops temporarily, so that I don't lose my progress or have to restart the quiz.
+
+#### Acceptance Criteria
+
+1. WHEN a quiz session starts, THE Quiz System SHALL load all session questions into browser local storage
+2. WHEN navigating between questions, THE Quiz System SHALL retrieve questions from local storage first, falling back to API if needed
+3. WHEN internet connection is lost, THE Quiz System SHALL allow users to view and answer questions from local cache
+4. WHEN an answer is submitted offline, THE Quiz System SHALL queue the submission in local storage
+5. WHEN internet connection is restored, THE Quiz System SHALL automatically sync queued answer submissions to the server
+6. WHEN sync completes, THE Quiz System SHALL update local progress data with server response
+7. WHEN a sync fails, THE Quiz System SHALL retry with exponential backoff up to 3 attempts
+8. WHEN a quiz session is completed, THE Quiz System SHALL clear local storage for that session
+9. WHEN the browser is refreshed during an offline session, THE Quiz System SHALL restore the session state from local storage
+10. WHEN connection status changes, THE Quiz System SHALL display a visual indicator (online/offline/syncing)
+
+**Phase:** Phase 3 (after import management is complete)
+
+**Technical Approach:**
+- Use browser localStorage or IndexedDB for question caching
+- Implement queue system for offline answer submissions
+- Add connection status monitoring
+- Implement automatic sync on reconnection
