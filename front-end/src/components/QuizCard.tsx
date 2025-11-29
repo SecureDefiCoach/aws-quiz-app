@@ -212,16 +212,13 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
               }`}
               onClick={() => handleAnswerToggle(option.letter)}
             >
-              <span className="option-letter">{option.letter}</span>
               <span className="option-text">{option.text}</span>
             </div>
           ))}
         </div>
 
         {feedback && (
-          <div className={`feedback ${feedback.isCorrect ? 'success' : 'error'}`}>
-            <h4>{feedback.isCorrect ? '✓ Correct!' : '✗ Incorrect'}</h4>
-            
+          <div className="feedback">
             {feedback.explanation && (
               <div className="explanation-section">
                 <button 
@@ -235,10 +232,6 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
                 )}
               </div>
             )}
-            
-            <p className="progress-stats">
-              This question: {feedback.countRight} right, {feedback.countWrong} wrong
-            </p>
           </div>
         )}
 
