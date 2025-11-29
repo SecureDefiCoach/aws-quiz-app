@@ -3,8 +3,6 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../amplify/data/resource';
 import QuizCard from './QuizCard';
 
-const client = generateClient<Schema>();
-
 interface Exam {
   number: string;
   name: string;
@@ -30,7 +28,11 @@ function QuizBuilder() {
 
   // Load exams on mount
   useEffect(() => {
-    loadExams();
+    // Small delay to ensure Amplify is configured
+    const timer = setTimeout(() => {
+      loadExams();
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   // Load subdomains when exam changes
@@ -54,6 +56,7 @@ function QuizBuilder() {
 
   const loadExams = async () => {
     try {
+      const client = generateClient<Schema>();
       const { data } = await client.queries.getExams();
       setExams(data || []);
     } catch (err) {
@@ -64,6 +67,7 @@ function QuizBuilder() {
 
   const loadSubdomains = async (examNumber: string) => {
     try {
+      const client = generateClient<Schema>();
       const { data } = await client.queries.getSubDomains({ examNumber });
       setSubdomains(data || []);
     } catch (err) {
@@ -74,6 +78,7 @@ function QuizBuilder() {
 
   const updateQuestionCount = async () => {
     try {
+      const client = generateClient<Schema>();
       const { data } = await client.queries.getQuestionCount({
         examNumber: selectedExam,
         subDomain: selectedSubdomain || undefined,
@@ -103,6 +108,7 @@ function QuizBuilder() {
     setError(null);
 
     try {
+      const client = generateClient<Schema>();
       const examData = exams.find(e => e.number === selectedExam);
       const { data } = await client.queries.startQuiz({
         examNumber: selectedExam,
