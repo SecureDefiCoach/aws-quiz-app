@@ -1,0 +1,524 @@
+{
+  "auth": {
+    "user_pool_id": "us-east-1_UYrjiMhGP",
+    "aws_region": "us-east-1",
+    "user_pool_client_id": "5pqeptkhoapv3g8u9kt7b4rmna",
+    "identity_pool_id": "us-east-1:6f64a4e5-6db3-42ce-b868-81c8223954d3",
+    "mfa_methods": [],
+    "standard_required_attributes": [
+      "email"
+    ],
+    "username_attributes": [
+      "email"
+    ],
+    "user_verification_types": [
+      "email"
+    ],
+    "groups": [],
+    "mfa_configuration": "NONE",
+    "password_policy": {
+      "min_length": 8,
+      "require_lowercase": true,
+      "require_numbers": true,
+      "require_symbols": true,
+      "require_uppercase": true
+    },
+    "unauthenticated_identities_enabled": true
+  },
+  "data": {
+    "url": "https://d45q7mxkvrh3pnonajewwaitn4.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_region": "us-east-1",
+    "api_key": "da2-vt5spjdbp5dg5ncmias4ayc5iu",
+    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
+    "authorization_types": [
+      "API_KEY",
+      "AWS_IAM"
+    ],
+    "model_introspection": {
+      "version": 1,
+      "models": {},
+      "enums": {},
+      "nonModels": {
+        "Exam": {
+          "name": "Exam",
+          "fields": {
+            "number": {
+              "name": "number",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "display": {
+              "name": "display",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "SubDomain": {
+          "name": "SubDomain",
+          "fields": {
+            "num": {
+              "name": "num",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": true,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "QuizSession": {
+          "name": "QuizSession",
+          "fields": {
+            "sessionId": {
+              "name": "sessionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "total": {
+              "name": "total",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "examName": {
+              "name": "examName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "subDomain": {
+              "name": "subDomain",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "QuestionOption": {
+          "name": "QuestionOption",
+          "fields": {
+            "letter": {
+              "name": "letter",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "text": {
+              "name": "text",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "QuestionData": {
+          "name": "QuestionData",
+          "fields": {
+            "questionNumber": {
+              "name": "questionNumber",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "total": {
+              "name": "total",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "question": {
+              "name": "question",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "options": {
+              "name": "options",
+              "isArray": true,
+              "type": {
+                "nonModel": "QuestionOption"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": false
+            },
+            "isMulti": {
+              "name": "isMulti",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": true,
+              "attributes": []
+            },
+            "questionType": {
+              "name": "questionType",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "rowNum": {
+              "name": "rowNum",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "subDomain": {
+              "name": "subDomain",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "countRight": {
+              "name": "countRight",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "countWrong": {
+              "name": "countWrong",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "sessionCorrect": {
+              "name": "sessionCorrect",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "sessionWrong": {
+              "name": "sessionWrong",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "originalNumber": {
+              "name": "originalNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "markType": {
+              "name": "markType",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "QuizSummary": {
+          "name": "QuizSummary",
+          "fields": {
+            "correct": {
+              "name": "correct",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "total": {
+              "name": "total",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "percentage": {
+              "name": "percentage",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            }
+          }
+        },
+        "AnswerFeedback": {
+          "name": "AnswerFeedback",
+          "fields": {
+            "isCorrect": {
+              "name": "isCorrect",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": true,
+              "attributes": []
+            },
+            "correctLetters": {
+              "name": "correctLetters",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": false
+            },
+            "selectedLetters": {
+              "name": "selectedLetters",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": false
+            },
+            "explanation": {
+              "name": "explanation",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "countRight": {
+              "name": "countRight",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "countWrong": {
+              "name": "countWrong",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "isComplete": {
+              "name": "isComplete",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": true,
+              "attributes": []
+            },
+            "summary": {
+              "name": "summary",
+              "isArray": false,
+              "type": {
+                "nonModel": "QuizSummary"
+              },
+              "isRequired": false,
+              "attributes": []
+            }
+          }
+        }
+      },
+      "queries": {
+        "getExams": {
+          "name": "getExams",
+          "isArray": true,
+          "type": {
+            "nonModel": "Exam"
+          },
+          "isRequired": false,
+          "isArrayNullable": true
+        },
+        "getSubDomains": {
+          "name": "getSubDomains",
+          "isArray": true,
+          "type": {
+            "nonModel": "SubDomain"
+          },
+          "isRequired": false,
+          "isArrayNullable": true,
+          "arguments": {
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            }
+          }
+        },
+        "getQuestionCount": {
+          "name": "getQuestionCount",
+          "isArray": false,
+          "type": "Int",
+          "isRequired": false,
+          "arguments": {
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "subDomain": {
+              "name": "subDomain",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false
+            },
+            "states": {
+              "name": "states",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "isArrayNullable": false
+            }
+          }
+        },
+        "startQuiz": {
+          "name": "startQuiz",
+          "isArray": false,
+          "type": {
+            "nonModel": "QuizSession"
+          },
+          "isRequired": false,
+          "arguments": {
+            "examNumber": {
+              "name": "examNumber",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "examName": {
+              "name": "examName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "subDomain": {
+              "name": "subDomain",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false
+            },
+            "states": {
+              "name": "states",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "isArrayNullable": false
+            },
+            "maxQuestions": {
+              "name": "maxQuestions",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false
+            }
+          }
+        },
+        "getCurrentQuestion": {
+          "name": "getCurrentQuestion",
+          "isArray": false,
+          "type": {
+            "nonModel": "QuestionData"
+          },
+          "isRequired": false,
+          "arguments": {
+            "sessionId": {
+              "name": "sessionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            }
+          }
+        }
+      },
+      "mutations": {
+        "submitAnswer": {
+          "name": "submitAnswer",
+          "isArray": false,
+          "type": {
+            "nonModel": "AnswerFeedback"
+          },
+          "isRequired": false,
+          "arguments": {
+            "sessionId": {
+              "name": "sessionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "questionId": {
+              "name": "questionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "selectedLetters": {
+              "name": "selectedLetters",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "isArrayNullable": false
+            }
+          }
+        },
+        "markAsMastered": {
+          "name": "markAsMastered",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false,
+          "arguments": {
+            "questionId": {
+              "name": "questionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            }
+          }
+        },
+        "setQuestionMark": {
+          "name": "setQuestionMark",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false,
+          "arguments": {
+            "questionId": {
+              "name": "questionId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "markType": {
+              "name": "markType",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "version": "1.4"
+}
