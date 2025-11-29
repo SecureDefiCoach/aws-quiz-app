@@ -34,9 +34,12 @@ const QuestionSchema = new mongoose.Schema({
     optionE: String,
     optionF: String,
     answer: String,
+    explanation: String,
     examNumber: String,
+    examName: String,
     subDomainNum: String,
     subDomain: String,
+    originalNumber: String,
 });
 const Question = mongoose.model('Question', QuestionSchema);
 
@@ -76,9 +79,12 @@ async function importData() {
                 optionE: data['option E'],
                 optionF: data['option F'],
                 answer: data['answer'],
+                explanation: data['_Explanation'],
                 examNumber: data['_ExamNumber'],
+                examName: data['_ExamName'],
                 subDomainNum: data['_SubDomainNum'],
                 subDomain: data['_SubDomainName'],
+                originalNumber: data['_OriginalNumber'],
             };
 
 results.push(newDoc);

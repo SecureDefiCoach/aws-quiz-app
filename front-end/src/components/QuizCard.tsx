@@ -49,6 +49,8 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
   const [feedback, setFeedback] = useState<AnswerFeedback | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
   useEffect(() => {
     loadQuestion();
@@ -111,6 +113,8 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
 
       if (data) {
         setFeedback(data);
+        // Show explanation expanded if wrong, collapsed if correct
+        setShowExplanation(!data.isCorrect);
       }
     } catch (err) {
       console.error('Error submitting answer:', err);
@@ -122,7 +126,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
 
   const handleNext = () => {
     if (feedback?.isComplete) {
-      onComplete();
+      setShowSummary(true);
     } else {
       loadQuestion();
     }
@@ -147,8 +151,8 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     return null;
   }
 
-  // Show summary if quiz is complete
-  if (feedback?.isComplete && feedback.summary) {
+  // Show summary if user clicked to view it
+  if (showSummary && feedback?.summary) {
     return (
       <div className="card">
         <h2>Quiz Complete! 🎉</h2>
@@ -217,9 +221,21 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
         {feedback && (
           <div className={`feedback ${feedback.isCorrect ? 'success' : 'error'}`}>
             <h4>{feedback.isCorrect ? '✓ Correct!' : '✗ Incorrect'}</h4>
+            
             {feedback.explanation && (
-              <p className="explanation">{feedback.explanation}</p>
+              <div className="explanation-section">
+                <button 
+                  className="explanation-toggle"
+                  onClick={() => setShowExplanation(!showExplanation)}
+                >
+                  {showExplanation ? '▼' : '▶'} Explanation
+                </button>
+                {showExplanation && (
+                  <p className="explanation">{feedback.explanation}</p>
+                )}
+              </div>
             )}
+            
             <p className="progress-stats">
               This question: {feedback.countRight} right, {feedback.countWrong} wrong
             </p>
@@ -243,6 +259,12 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
             </button>
           )}
         </div>
+
+        {question.originalNumber && (
+          <div className="question-reference">
+            Question #{question.originalNumber}
+          </div>
+        )}
       </div>
     </div>
   );
