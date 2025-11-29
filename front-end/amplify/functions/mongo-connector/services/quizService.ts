@@ -711,3 +711,159 @@ export async function setQuestionMark(
     throw error;
   }
 }
+
+// ============================================================================
+// DASHBOARD STATISTICS
+// ============================================================================
+
+export interface SubdomainStats {
+  subDomain: string;
+  domainName: string;
+  new: number;
+  right: number;
+  wrong: number;
+  mastered: number;
+  total: number;
+}
+
+export interface DashboardStats {
+  examNumber: string;
+  examName: string;
+  subdomains: SubdomainStats[];
+  totals: {
+    new: number;
+    right: number;
+    wrong: number;
+    mastered: number;
+    total: number;
+  };
+}
+
+/**
+ * Gets dashboard statistics grouped by subdomain with exam filtering
+ * 
+ * @param db - MongoDB database instance
+ * @param userId - Cognito user ID
+ * @param examNumber - Exam filter (or "ALL" for all exams)
+ * @param logger - Logger instance
+ * @returns Dashboard statistics with subdomain breakdowns
+ */
+export async function getDashboardStats(
+  db: Db,
+  userId: string,
+  examNumber: string,
+  logger: Logger
+): Promise<DashboardStats> {
+  logger.logEntry('getDashboardStats', { userId, examNumber });
+  
+  try {
+    const questions = db.collection('questions');
+    const userProgress = db.collection('userProgress');
+    
+    // Build match filter for exam
+    const examFilter = examNumber === 'ALL' ? {} : { examNumber };
+    
+    // Get all questions matching exam filter
+    const allQuestions = await questions.find(examFilter).toArray();
+    
+    // Get user progress for these questions
+    const questionIds = allQuestions.map(q => q._id);
+    const progressRecords = await userProgress.find({
+      userId,
+      questionId: { $in: questionIds }
+    }).toArray();
+    
+    // Create progress map for quick lookup
+    const progressMap = new Map();
+    progressRecords.forEach(p => {
+      progressMap.set(p.questionId.toString(), p);
+    });
+    
+    // Group by subdomain
+    const subdomainMap = new Map<string, SubdomainStats>();
+    
+    allQuestions.forEach(question => {
+      const subDomain = question.subDomain || 'Unknown';
+      const domainName = question.domainName || subDomain;
+      const progress = progressMap.get(question._id.toString());
+      const state = progress?.state || 'NEW';
+      
+      if (!subdomainMap.has(subDomain)) {
+        subdomainMap.set(subDomain, {
+          subDomain,
+          domainName,
+          new: 0,
+          right: 0,
+          wrong: 0,
+          mastered: 0,
+          total: 0
+        });
+      }
+      
+      const stats = subdomainMap.get(subDomain)!;
+      stats.total++;
+      
+      switch (state) {
+        case 'NEW':
+          stats.new++;
+          break;
+        case 'RIGHT':
+          stats.right++;
+          break;
+        case 'WRONG':
+          stats.wrong++;
+          break;
+        case 'MASTERED':
+          stats.mastered++;
+          break;
+      }
+    });
+    
+    // Convert to array and sort by subdomain
+    const subdomains = Array.from(subdomainMap.values()).sort((a, b) => {
+      return a.subDomain.localeCompare(b.subDomain, undefined, { numeric: true });
+    });
+    
+    // Calculate totals
+    const totals = {
+      new: 0,
+      right: 0,
+      wrong: 0,
+      mastered: 0,
+      total: 0
+    };
+    
+    subdomains.forEach(s => {
+      totals.new += s.new;
+      totals.right += s.right;
+      totals.wrong += s.wrong;
+      totals.mastered += s.mastered;
+      totals.total += s.total;
+    });
+    
+    // Get exam name
+    let examName = 'All Exams';
+    if (examNumber !== 'ALL' && allQuestions.length > 0) {
+      examName = allQuestions[0].examName || examNumber;
+    }
+    
+    const result = {
+      examNumber,
+      examName,
+      subdomains,
+      totals
+    };
+    
+    logger.logExit('getDashboardStats', { 
+      examNumber, 
+      subdomainCount: subdomains.length,
+      totalQuestions: totals.total 
+    });
+    
+    return result;
+    
+  } catch (error) {
+    logger.logError('getDashboardStats', error as Error);
+    throw error;
+  }
+}
