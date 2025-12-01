@@ -478,3 +478,13 @@ button {
 .mark-option span {
   user-select: none;
 }
+
+
+/* Hide confirmation code form fields for admin approval flow */
+[data-amplify-authenticator] [data-amplify-router-content="confirmSignUp"] form {
+  display: none !important;
+}
+
+[data-amplify-authenticator] [data-amplify-router-content="confirmSignUp"] [data-amplify-footer] {
+  display: none !important;
+}

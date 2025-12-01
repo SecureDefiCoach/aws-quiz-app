@@ -94,6 +94,13 @@ const schema = a.schema({
     totals: a.ref('DashboardTotals').required(),
   }),
   
+  CognitoUser: a.customType({
+    username: a.string().required(),
+    email: a.string().required(),
+    status: a.string().required(),
+    createdDate: a.string().required(),
+  }),
+  
   // ============================================================================
   // QUERIES
   // ============================================================================
@@ -143,6 +150,17 @@ const schema = a.schema({
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),
   
+  // Admin queries
+  listPendingUsers: a.query()
+    .returns(a.ref('CognitoUser').array())
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
+  listAllUsers: a.query()
+    .returns(a.ref('CognitoUser').array())
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
   // ============================================================================
   // MUTATIONS
   // ============================================================================
@@ -168,6 +186,19 @@ const schema = a.schema({
       questionId: a.id().required(),
       markType: a.integer().required()
     })
+    .returns(a.boolean())
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
+  // Admin mutations
+  confirmUser: a.mutation()
+    .arguments({ username: a.string().required() })
+    .returns(a.boolean())
+    .authorization(allow => [allow.authenticated()])
+    .handler(a.handler.function(mongoConnector)),
+  
+  deleteUser: a.mutation()
+    .arguments({ username: a.string().required() })
     .returns(a.boolean())
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),

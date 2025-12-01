@@ -6,26 +6,26 @@ import { defineAuth } from '@aws-amplify/backend';
  * 
  * Configuration:
  * - Email/password authentication
- * - Email verification required
+ * - Admin approval required (no email verification needed)
+ * - Users can sign up but cannot log in until admin confirms them
  * - Cognito default password policy (min 8 chars, requires uppercase, lowercase, number, special char)
  * - Access token expires in 1 hour (Cognito default)
  * - Refresh token expires in 30 days (Cognito default)
  */
 export const auth = defineAuth({
   loginWith: {
-    email: true,
+    email: {
+      verificationEmailStyle: 'CODE',
+      verificationEmailSubject: 'Verify your email',
+      verificationEmailBody: (createCode) => 
+        `Your verification code is ${createCode()}`,
+    },
   },
   userAttributes: {
     email: {
       required: true,
-      mutable: false,  // Email cannot be changed after signup
+      mutable: false,
     },
   },
   accountRecovery: 'EMAIL_ONLY',
-  // For sandbox/development - auto-confirm users
-  senders: {
-    email: {
-      fromEmail: 'noreply@example.com',
-    },
-  },
 });

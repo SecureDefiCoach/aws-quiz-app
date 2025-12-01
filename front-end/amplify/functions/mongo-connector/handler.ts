@@ -20,6 +20,12 @@ import {
   setQuestionMark,
   getDashboardStats,
 } from './services/quizService';
+import {
+  listPendingUsers,
+  listAllUsers,
+  confirmUser,
+  deleteUser,
+} from './services/adminService';
 
 /**
  * AppSync event structure
@@ -32,6 +38,10 @@ interface AppSyncEvent {
   identity?: {
     sub: string;  // Cognito user ID
     username?: string;
+    claims?: {
+      sub?: string;
+      email?: string;
+    };
   };
   request?: {
     headers?: {
@@ -58,6 +68,8 @@ export const handler = async (event: any): Promise<any> => {
   const fieldName = event.info?.fieldName || event.fieldName || 'unknown';
   const args = event.arguments || event.args || {};
   const userId = event.identity?.sub || event.identity?.claims?.sub || 'unknown';
+  // For admin operations, we need to get the email from Cognito
+  const userEmail = event.identity?.claims?.email || event.identity?.username || userId;
   
   logger.logEntry('quiz-resolver', { 
     fieldName,
@@ -124,6 +136,23 @@ export const handler = async (event: any): Promise<any> => {
       
       case 'getDashboardStats':
         result = await getDashboardStats(db, userId, args.examNumber || 'ALL', logger);
+        break;
+      
+      // Admin operations
+      case 'listPendingUsers':
+        result = await listPendingUsers(userEmail, logger);
+        break;
+      
+      case 'listAllUsers':
+        result = await listAllUsers(userEmail, logger);
+        break;
+      
+      case 'confirmUser':
+        result = await confirmUser(userEmail, args.username, logger);
+        break;
+      
+      case 'deleteUser':
+        result = await deleteUser(userEmail, args.username, logger);
         break;
         
       default:
