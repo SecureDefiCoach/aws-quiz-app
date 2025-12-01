@@ -73,8 +73,8 @@ export async function listPendingUsers(userEmail: string, logger: Logger): Promi
     
     const response = await cognitoClient.send(command);
     
-    const users = (response.Users || []).map(user => {
-      const emailAttr = user.Attributes?.find(attr => attr.Name === 'email');
+    const users = (response.Users || []).map((user: any) => {
+      const emailAttr = user.Attributes?.find((attr: any) => attr.Name === 'email');
       return {
         username: user.Username || '',
         email: emailAttr?.Value || '',
@@ -109,8 +109,8 @@ export async function listAllUsers(userEmail: string, logger: Logger): Promise<a
     
     const response = await cognitoClient.send(command);
     
-    const users = (response.Users || []).map(user => {
-      const emailAttr = user.Attributes?.find(attr => attr.Name === 'email');
+    const users = (response.Users || []).map((user: any) => {
+      const emailAttr = user.Attributes?.find((attr: any) => attr.Name === 'email');
       return {
         username: user.Username || '',
         email: emailAttr?.Value || '',
