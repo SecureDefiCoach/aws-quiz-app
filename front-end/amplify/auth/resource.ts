@@ -16,9 +16,9 @@ export const auth = defineAuth({
   loginWith: {
     email: {
       verificationEmailStyle: 'CODE',
-      verificationEmailSubject: 'Verify your email',
+      verificationEmailSubject: 'Verify your ERT Quiz App account',
       verificationEmailBody: (createCode) => 
-        `Your verification code is ${createCode()}`,
+        `Welcome to the Exam Readiness Tracker (ERT) Quiz App!\n\nYour verification code is: ${createCode()}\n\nEnter this code to complete your registration and start tracking your AWS certification exam progress.\n\nIf you didn't sign up for this app, you can safely ignore this email.`,
     },
   },
   userAttributes: {
