@@ -128,47 +128,10 @@ function AdminPanel() {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <div>
-          <h2 style={{ marginBottom: '0.5rem' }}>Admin Panel</h2>
-          <p style={{ color: '#666', margin: 0 }}>
-            Manage user registrations and approvals
-          </p>
-        </div>
-        <div>
-          <a 
-            href="https://github.com/SecureDefiCoach/aws-quiz-app/blob/main/docs/ADMIN_GUIDE.md" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ 
-              padding: '0.5rem 1rem',
-              marginRight: '0.5rem',
-              backgroundColor: '#3b82f6',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '0.375rem',
-              fontSize: '0.875rem',
-            }}
-          >
-            Admin Guide
-          </a>
-          <a 
-            href="https://github.com/SecureDefiCoach/aws-quiz-app/blob/main/docs/TROUBLESHOOTING.md" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ 
-              padding: '0.5rem 1rem',
-              backgroundColor: '#6b7280',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '0.375rem',
-              fontSize: '0.875rem',
-            }}
-          >
-            Troubleshooting
-          </a>
-        </div>
-      </div>
+      <h2>Admin Panel</h2>
+      <p style={{ color: '#666', marginBottom: '2rem' }}>
+        Manage user registrations and approvals
+      </p>
 
       {error && (
         <div style={{

@@ -50,14 +50,6 @@ function App() {
               )}
             </nav>
             <div className="user-info">
-              <a 
-                href="https://github.com/SecureDefiCoach/aws-quiz-app/blob/main/docs/USER_GUIDE.md" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ marginRight: '1rem', color: '#3b82f6', textDecoration: 'none' }}
-              >
-                Help
-              </a>
               <span>Welcome, {user?.username || user?.signInDetails?.loginId || 'User'}</span>
               <button onClick={signOut} className="btn-secondary">Sign Out</button>
             </div>
