@@ -32,7 +32,7 @@ Thumbs.db
 
 # Amplify
 front-end/.amplify/
-front-end/amplify_outputs.json
+# front-end/amplify_outputs.json  # Must be committed for Amplify Console builds
 front-end/.amplify/artifacts/
 
 # Build outputs
