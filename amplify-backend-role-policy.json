@@ -26,7 +26,8 @@
         "cloudformation:DescribeChangeSet",
         "cloudformation:ExecuteChangeSet",
         "cloudformation:DeleteChangeSet",
-        "cloudformation:ListStacks"
+        "cloudformation:ListStacks",
+        "cloudformation:GetTemplateSummary"
       ],
       "Resource": "*"
     },
