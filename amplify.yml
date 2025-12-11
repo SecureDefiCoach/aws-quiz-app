@@ -10,8 +10,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - pwd
-        - ls -la
         - npm ci --cache .npm --prefer-offline
     build:
       commands:

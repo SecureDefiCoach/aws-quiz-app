@@ -1,68 +1,31 @@
-import { useState } from 'react';
-import { Authenticator } from '@aws-amplify/ui-react';
-import Dashboard from './components/Dashboard';
-import QuizBuilder from './components/QuizBuilder';
-import AdminPanel from './components/AdminPanel';
-
-type View = 'dashboard' | 'quiz' | 'admin';
-
-const ADMIN_EMAIL = 'tristanmarvin@outlook.com';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import DemoPage from './components/DemoPage';
+import DemoApp from './components/DemoApp';
+import StoryPage from './components/StoryPage';
+import AuthPage from './components/AuthPage';
+import { DemoModeProvider } from './contexts/DemoModeContext';
 
 function App() {
-  const [currentView, setCurrentView] = useState<View>('dashboard');
-
   return (
-    <Authenticator>
-      {({ signOut, user }) => {
-        const userEmail = user?.signInDetails?.loginId || user?.username || '';
-        const isAdmin = userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-        
-        return (
-        <div className="app">
-          <header className="app-header">
-            <div className="app-title">
-              <h1>ERT</h1>
-              <span className="app-subtitle">Exam Readiness Tracker</span>
-            </div>
-            <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <button
-                onClick={() => setCurrentView('dashboard')}
-                className={currentView === 'dashboard' ? 'btn-primary' : 'btn-secondary'}
-                style={{ padding: '0.5rem 1rem' }}
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={() => setCurrentView('quiz')}
-                className={currentView === 'quiz' ? 'btn-primary' : 'btn-secondary'}
-                style={{ padding: '0.5rem 1rem' }}
-              >
-                Start Quiz
-              </button>
-              {isAdmin && (
-                <button
-                  onClick={() => setCurrentView('admin')}
-                  className={currentView === 'admin' ? 'btn-primary' : 'btn-secondary'}
-                  style={{ padding: '0.5rem 1rem' }}
-                >
-                  Admin
-                </button>
-              )}
-            </nav>
-            <div className="user-info">
-              <span>Welcome, {user?.username || user?.signInDetails?.loginId || 'User'}</span>
-              <button onClick={signOut} className="btn-secondary">Sign Out</button>
-            </div>
-          </header>
-          <main className="app-main">
-            {currentView === 'dashboard' && <Dashboard />}
-            {currentView === 'quiz' && <QuizBuilder />}
-            {currentView === 'admin' && isAdmin && <AdminPanel />}
-          </main>
-        </div>
-        );
-      }}
-    </Authenticator>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/demo" element={<DemoPage />} />
+        <Route path="/demo/app/*" element={
+          <DemoModeProvider>
+            <DemoApp />
+          </DemoModeProvider>
+        } />
+        <Route path="/story" element={<StoryPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/dashboard" element={<AuthPage />} />
+        <Route path="/quiz" element={<AuthPage />} />
+        <Route path="/admin" element={<AuthPage />} />
+        {/* Redirect any unknown routes to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -26,7 +26,7 @@ function AdminPanel() {
       if (errors) {
         throw new Error(errors[0].message);
       }
-      setPendingUsers(data || []);
+      setPendingUsers((data || []) as CognitoUser[]);
     } catch (err: any) {
       setError(err.message || 'Failed to load pending users');
     } finally {
@@ -42,7 +42,7 @@ function AdminPanel() {
       if (errors) {
         throw new Error(errors[0].message);
       }
-      setAllUsers(data || []);
+      setAllUsers((data || []) as CognitoUser[]);
     } catch (err: any) {
       setError(err.message || 'Failed to load users');
     } finally {

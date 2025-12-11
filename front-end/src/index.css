@@ -488,3 +488,842 @@ button {
 [data-amplify-authenticator] [data-amplify-router-content="confirmSignUp"] [data-amplify-footer] {
   display: none !important;
 }
+
+/* Landing Page Styles */
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+  color: white;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.landing-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.landing-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.landing-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.landing-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.landing-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.features-preview {
+  text-align: center;
+}
+
+.features-preview h3 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.feature-card h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 2rem;
+  opacity: 0.7;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Demo Page Styles */
+.demo-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #faf7f2 0%, #f5f1e8 100%);
+  color: #374151;
+}
+
+.demo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.demo-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.demo-title h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.demo-badge {
+  background: #6b7280;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.demo-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.demo-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.demo-content {
+  max-width: 600px;
+  text-align: center;
+}
+
+.demo-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.demo-content > p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.demo-info {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.demo-feature strong {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.demo-feature ul {
+  list-style: none;
+  padding: 0;
+}
+
+.demo-feature li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.demo-feature li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.demo-start-btn {
+  margin: 2rem 0;
+}
+
+.demo-disclaimer {
+  margin-top: 2rem;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* Auth Page Styles */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+  padding: 2rem;
+}
+
+.auth-footer {
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-large {
+    min-width: 250px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .landing-header,
+  .demo-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .demo-content h2 {
+    font-size: 2rem;
+  }
+}
+/* Demo App Styles */
+.demo-app-header {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.demo-badge-header {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 1rem;
+}
+
+.demo-mode-indicator {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #ff9900 0%, #ec7211 100%);
+  color: white;
+  padding: 0.75rem;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  height: 60px; /* Fixed height for consistent spacing */
+}
+
+.demo-indicator-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.demo-indicator-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.demo-upgrade-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.demo-upgrade-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure demo app main content has proper spacing for fixed footer */
+.demo-app .app-main {
+  padding-bottom: 80px; /* Extra space for the demo footer */
+  min-height: calc(100vh - 140px); /* Account for header and footer */
+}
+
+/* Demo Dashboard Styles */
+.demo-welcome-card {
+  background: linear-gradient(135deg, #ff9900 0%, #ec7211 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.demo-welcome-card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.demo-welcome-card p {
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.demo-features-highlight {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.demo-feature-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.demo-cta-card {
+  background: white;
+  border: 2px solid #ff9900;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.demo-cta-card h3 {
+  color: #ff9900;
+  margin-bottom: 1rem;
+}
+
+.demo-cta-card p {
+  margin-bottom: 1.5rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Demo Quiz Builder Styles */
+.demo-info-banner {
+  background: linear-gradient(135deg, #ff9900 0%, #ec7211 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.demo-info-banner h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.demo-info-banner p {
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.demo-note {
+  margin-top: 0.5rem;
+}
+
+.demo-note small {
+  color: #ff9900;
+  font-style: italic;
+}
+
+.demo-features-card {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.demo-features-card h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.demo-features-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.demo-features-card li {
+  padding: 0.25rem 0;
+  color: #555;
+}
+
+.demo-features-card p {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* Demo Quiz Card Styles */
+.demo-completion-message {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.demo-completion-message h3 {
+  margin-bottom: 1rem;
+}
+
+.demo-completion-message p {
+  opacity: 0.9;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Demo Badge in Quiz */
+.demo-badge {
+  background: #ff9900;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Responsive adjustments for demo mode */
+@media (max-width: 768px) {
+  .demo-indicator-content {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .demo-features-highlight {
+    grid-template-columns: 1fr;
+  }
+  
+  .demo-welcome-card,
+  .demo-info-banner {
+    padding: 1rem;
+  }
+  
+  .demo-welcome-card h2,
+  .demo-info-banner h2 {
+    font-size: 1.2rem;
+  }
+}
+/* Demo Quiz Card specific adjustments */
+.demo-app .quiz-card {
+  margin-bottom: 2rem; /* Extra margin for demo mode */
+}
+
+.demo-app .quiz-actions {
+  margin-top: 2rem;
+  margin-bottom: 2rem; /* Ensure actions are never hidden by footer */
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.demo-app .quiz-actions button {
+  margin-bottom: 0.5rem; /* Stack buttons on mobile if needed */
+}
+
+/* Ensure demo completion message is also visible */
+.demo-app .demo-completion-message {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Adjust question marking section spacing in demo */
+.demo-app .question-marking {
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile adjustments for demo mode */
+@media (max-width: 768px) {
+  .demo-app .app-main {
+    padding-bottom: 120px; /* More space on mobile for stacked footer content */
+  }
+  
+  .demo-mode-indicator {
+    height: auto;
+    min-height: 80px;
+  }
+  
+  .demo-app .quiz-actions {
+    position: sticky;
+    bottom: 100px; /* Float above the footer on mobile */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .demo-app .quiz-actions button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+}
+/* Demo Page Button Overrides */
+.demo-page .btn-secondary {
+  background-color: #6b7280;
+  color: white;
+  border: 1px solid #6b7280;
+}
+
+.demo-page .btn-secondary:hover {
+  background-color: #4b5563;
+  border-color: #4b5563;
+}
+
+.demo-page .btn-secondary:disabled {
+  background-color: #9ca3af;
+  border-color: #9ca3af;
+  opacity: 0.6;
+}
+
+.demo-nav .btn-secondary {
+  background-color: #6b7280;
+  color: white;
+  border: 1px solid #6b7280;
+}
+
+.demo-nav .btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.demo-nav .btn-primary {
+  background-color: #374151;
+  color: white;
+  border: 1px solid #374151;
+}
+
+.demo-nav .btn-primary:hover {
+  background-color: #1f2937;
+}
+
+/* Story Page Styles */
+.story-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.story-title h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  background: linear-gradient(45deg, #fff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.story-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0.5rem 0 0 0;
+}
+
+.story-nav .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.story-nav .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.story-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.story-section {
+  margin-bottom: 4rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.story-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.story-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.story-highlight {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #4CAF50;
+  margin: 1.5rem 0;
+}
+
+.story-highlight strong {
+  color: #4CAF50;
+}
+
+.architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.arch-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.arch-item strong {
+  color: #64B5F6;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.development-phases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.phase {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.phase h4 {
+  color: #FFB74D;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.achievement {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.achievement h4 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.skills-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.skill-category {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.skill-category h4 {
+  color: #81C784;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.story-conclusion {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.story-conclusion h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.story-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.story-footer {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .story-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .story-title h1 {
+    font-size: 2rem;
+  }
+  
+  .story-main {
+    padding: 1rem;
+  }
+  
+  .story-section {
+    padding: 1.5rem;
+  }
+  
+  .story-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .architecture-grid,
+  .development-phases,
+  .achievements-grid,
+  .skills-showcase {
+    grid-template-columns: 1fr;
+  }
+}
