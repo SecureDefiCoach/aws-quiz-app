@@ -74,7 +74,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
         return;
       }
 
-      setQuestion(data);
+      setQuestion(data as QuestionData);
       setMarkType(data.markType || 0);
     } catch (err) {
       console.error('Error loading question:', err);
@@ -115,7 +115,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       });
 
       if (data) {
-        setFeedback(data);
+        setFeedback(data as AnswerFeedback);
         // Show explanation expanded if wrong, collapsed if correct
         setShowExplanation(!data.isCorrect);
       }
@@ -149,7 +149,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     } catch (err) {
       console.error('Error setting mark:', err);
       // Revert on error
-      setMarkType(question.markType);
+      setMarkType((question as any).markType || 0);
     }
   };
 

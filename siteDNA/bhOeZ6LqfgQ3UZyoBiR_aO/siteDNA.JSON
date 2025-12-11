@@ -1,0 +1,76 @@
+{
+  "name": "Terminal",
+  "overview": "Terminal is a platform connecting fast-growing companies with elite, vetted remote software engineers from Canada, Latin America, and Europe. It offers an all-in-one solution for recruiting, hiring, global employment (EOR), and HR, enabling companies to hire high-quality talent faster and at lower costs.",
+  "websiteUrl": "https://www.terminal.io/",
+  "brandValues": ["Elite Talent Quality", "Global Opportunity Equity", "Flexibility and Customization", "Speed and Efficiency", "Full-Stack Solution/Simplicity"],
+  "visualAesthetics": ["professional", "modern", "trustworthy", "sleek", "digital sophistication", "human-centric"],
+  "toneOfVoice": ["Authoritative", "Professional", "Results-Oriented", "Confident", "Forward-Looking"],
+  "fonts": ["__figtree_2ca027"],
+  "campaigns": [{
+    "creatives": [{
+      "title": "End the Year Understaffed?",
+      "versions": [{
+        "fileName": "resource_8U-idQ9x7GTbadQmriN_L6.png"
+      }]
+    }, {
+      "title": "Avoid the Global Hiring Nightmare",
+      "versions": [{
+        "fileName": "resource_aR3Rk-oNal8bxPIOvVs46J.png"
+      }]
+    }, {
+      "title": "Access Elite Remote Engineers",
+      "versions": [{
+        "fileName": "resource_b2tmX96OR1yayOemXuHOpg.png"
+      }]
+    }, {
+      "title": "Go from Vetted to Hired in 48 Hours",
+      "versions": [{
+        "fileName": "resource_bS8WgTkf7dF60rCxaIXO2J.png"
+      }]
+    }]
+  }, {
+    "creatives": [{
+      "title": "The Full-Stack Remote Team Building",
+      "versions": [{
+        "fileName": "resource_9XUoFfKmjSucEpBi4HGkHf.png"
+      }]
+    }, {
+      "title": "Source Elite Global Talent",
+      "versions": [{
+        "fileName": "resource_8kWPldZZA3-f0MWmxpY4M1.png"
+      }]
+    }, {
+      "title": "EOR, HR, and Compliance Solved",
+      "versions": [{
+        "fileName": "resource_981CycmOxq90Bbu2U2MkZP.png"
+      }]
+    }, {
+      "title": "Scale Your Engineering Team Fast",
+      "versions": [{
+        "fileName": "resource_bbY226TOZNCcKMA7b-t_-R.png"
+      }]
+    }]
+  }, {
+    "creatives": [{
+      "title": "Is Global Hiring a Full-Time Job?",
+      "versions": [{
+        "fileName": "resource_agnym5UoBGh9CKszI32OdW.png"
+      }]
+    }, {
+      "title": "From Sourcing...",
+      "versions": [{
+        "fileName": "resource_8ONa3M1osFy4ONo90qBkZa.png"
+      }]
+    }, {
+      "title": "...To Hiring Compliance...",
+      "versions": [{
+        "fileName": "resource_8D9lbfXB4CP1LNA5-9a_tV.png"
+      }]
+    }, {
+      "title": "...To Global Payroll.",
+      "versions": [{
+        "fileName": "resource_bVQ1E74pY9i7A30czoI490.png"
+      }]
+    }]
+  }]
+}

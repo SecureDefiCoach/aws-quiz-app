@@ -70,7 +70,7 @@ function QuizBuilder() {
     try {
       const client = generateClient<Schema>();
       const { data } = await client.queries.getExams();
-      setExams(data || []);
+      setExams((data || []) as Exam[]);
     } catch (err) {
       console.error('Error loading exams:', err);
       setError('Failed to load exams');
@@ -81,7 +81,7 @@ function QuizBuilder() {
     try {
       const client = generateClient<Schema>();
       const { data } = await client.queries.getSubDomains({ examNumber });
-      setSubdomains(data || []);
+      setSubdomains((data || []) as SubDomain[]);
     } catch (err) {
       console.error('Error loading subdomains:', err);
       setError('Failed to load subdomains');
