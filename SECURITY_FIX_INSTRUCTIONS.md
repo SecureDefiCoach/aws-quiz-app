@@ -51,7 +51,8 @@ git push origin --force --all
 ## Current Status
 
 - [x] Backend role policy updated with Secrets Manager permissions
-- [ ] Secret created in AWS Secrets Manager
+- [x] Secret created in AWS Secrets Manager
+- [x] Application tested (demo quiz works with Secrets Manager!)
 - [ ] MongoDB password rotated
-- [ ] Application tested
+- [ ] Application re-tested with new password
 - [ ] Git history cleaned

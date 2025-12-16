@@ -43,7 +43,7 @@ Build portfolio enhancement features to showcase development skills and provide 
   - Update App.tsx to show landing page for unauthenticated users
   - _Requirements: 4.1, 4.5_
 
-- [ ] 2.2 Implement demo quiz flow
+- [x] 2.2 Implement demo quiz flow
   - Create demo session initialization with 5 sample questions
   - Build question navigation for demo mode (similar to main quiz)
   - Implement answer submission and validation
@@ -51,7 +51,7 @@ Build portfolio enhancement features to showcase development skills and provide 
   - Track demo progress and scoring locally
   - _Requirements: 5.1, 5.2, 5.3_
 
-- [ ] 2.3 Create demo results and conversion
+- [x] 2.3 Create demo results and conversion
   - Build results summary with score and explanations
   - Add compelling signup call-to-action with Amplify Auth
   - Show preview of full app features (hundreds of questions, progress tracking)
@@ -141,7 +141,7 @@ Build portfolio enhancement features to showcase development skills and provide 
 
 ### 6. Portfolio Story Integration
 
-- [ ] 6.1 Create story presentation launcher
+- [x] 6.1 Create story presentation launcher
   - Build StoryLauncher component for landing page
   - Add external link to NotebookLM presentation (when available)
   - Implement return navigation from story with URL parameters
