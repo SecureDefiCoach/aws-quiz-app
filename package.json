@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "db:seed": "node scripts/import-questions.js"
+    "db:seed": "node scripts/import-questions.js",
+    "db:add-aaia": "node scripts/import-aaia-questions.js",
+    "db:replace-aaia": "node scripts/import-aaia-questions.js --clear-aaia"
   },
   "keywords": [
     "nodejs",
