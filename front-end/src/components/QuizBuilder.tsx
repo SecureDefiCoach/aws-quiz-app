@@ -221,6 +221,14 @@ function QuizBuilder() {
               />
               Right
             </label>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={selectedStates.includes('EVER_WRONG')}
+                onChange={() => handleStateToggle('EVER_WRONG')}
+              />
+              Ever Wrong
+            </label>
           </div>
         </div>
 

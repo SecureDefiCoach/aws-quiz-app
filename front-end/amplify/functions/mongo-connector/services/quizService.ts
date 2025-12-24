@@ -228,7 +228,36 @@ export async function getQuestionCount(
       matchCriteria._id = { $nin: masteredIds };
     }
     
-    const count = await questions.countDocuments(matchCriteria);
+    // Get user progress for state filtering
+    const progressMap = new Map();
+    const userProgressDocs = await userProgress.find({ userId }).toArray();
+    userProgressDocs.forEach(p => {
+      progressMap.set(p.questionId.toString(), p);
+    });
+    
+    // Fetch all matching questions
+    const allQuestions = await questions.find(matchCriteria).toArray();
+    
+    // Filter by state
+    const filteredQuestions = allQuestions.filter(q => {
+      const qId = q._id.toString();
+      const progress = progressMap.get(qId);
+      
+      if (!progress) {
+        // No progress = NEW
+        return filters.states.includes('NEW');
+      }
+      
+      // Check for EVER_WRONG filter
+      if (filters.states.includes('EVER_WRONG') && progress.wrongCount > 0) {
+        return true;
+      }
+      
+      // Check for regular state filters
+      return filters.states.includes(progress.state);
+    });
+    
+    const count = filteredQuestions.length;
     
     logger.logExit('getQuestionCount', { count });
     return count;
@@ -329,6 +358,12 @@ export async function startQuiz(
         return filters.states.includes('NEW');
       }
       
+      // Check for EVER_WRONG filter
+      if (filters.states.includes('EVER_WRONG') && progress.wrongCount > 0) {
+        return true;
+      }
+      
+      // Check for regular state filters
       return filters.states.includes(progress.state);
     });
     
