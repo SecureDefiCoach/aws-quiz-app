@@ -368,7 +368,7 @@ export async function startQuiz(
     });
     
     if (filteredQuestions.length === 0) {
-      throw new NotFoundError('No questions match the specified filters');
+      throw new NotFoundError(`No questions match the selected filters. Try different states or subdomains for ${filters.examNumber}.`);
     }
     
     // Shuffle questions

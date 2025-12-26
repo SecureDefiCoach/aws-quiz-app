@@ -74,7 +74,14 @@ export const handler = async (event: any): Promise<any> => {
   logger.logEntry('quiz-resolver', { 
     fieldName,
     hasIdentity: !!userId,
-    eventKeys: Object.keys(event)
+    userId: userId,
+    eventKeys: Object.keys(event),
+    identityDetails: {
+      sub: event.identity?.sub,
+      claimsSub: event.identity?.claims?.sub,
+      username: event.identity?.username,
+      email: event.identity?.claims?.email
+    }
   });
   
   try {

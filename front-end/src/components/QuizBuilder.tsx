@@ -116,6 +116,13 @@ function QuizBuilder() {
       return;
     }
 
+    // Debug: Log user info
+    console.log('🔍 Starting quiz with user info:', {
+      selectedExam,
+      selectedStates,
+      selectedSubdomain
+    });
+
     setLoading(true);
     setError(null);
 
@@ -229,6 +236,7 @@ function QuizBuilder() {
               />
               Ever Wrong
             </label>
+
           </div>
         </div>
 
@@ -246,6 +254,12 @@ function QuizBuilder() {
         {questionCount > 0 && (
           <div className="question-count">
             {questionCount} question{questionCount !== 1 ? 's' : ''} available
+          </div>
+        )}
+
+        {questionCount === 0 && selectedExam && selectedStates.length > 0 && (
+          <div className="question-count" style={{ color: '#dc3545' }}>
+            No questions match your selected filters. Try selecting different states or subdomains.
           </div>
         )}
 
