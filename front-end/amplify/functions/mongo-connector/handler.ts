@@ -159,7 +159,7 @@ export const handler = async (event: any): Promise<any> => {
         break;
       
       case 'deleteUser':
-        result = await deleteUser(userEmail, args.username, logger);
+        result = await deleteUser(userEmail, args.username, logger, db);
         break;
         
       default:

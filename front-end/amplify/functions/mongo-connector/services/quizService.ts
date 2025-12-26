@@ -307,6 +307,15 @@ export async function startQuiz(
 ): Promise<QuizSession> {
   logger.logEntry('startQuiz', { userId, filters });
   
+  // Enhanced debug logging for Ever Wrong filter issue
+  console.log('🔍 DEBUG startQuiz:', {
+    userId,
+    examNumber: filters.examNumber,
+    states: filters.states,
+    subDomain: filters.subDomain,
+    maxQuestions: filters.maxQuestions
+  });
+  
   try {
     // Validate filters
     if (!filters.examNumber || !filters.examName) {
@@ -367,7 +376,43 @@ export async function startQuiz(
       return filters.states.includes(progress.state);
     });
     
+    // Enhanced debug logging for Ever Wrong filter issue
+    console.log('🔍 DEBUG filter results:', {
+      userId,
+      examNumber: filters.examNumber,
+      totalQuestions: allQuestions.length,
+      filteredQuestions: filteredQuestions.length,
+      progressRecords: userProgressDocs.length,
+      everWrongCount: userProgressDocs.filter(p => p.wrongCount > 0).length,
+      states: filters.states
+    });
+    
     if (filteredQuestions.length === 0) {
+      console.log('🔍 DEBUG no questions found:', {
+        userId,
+        examNumber: filters.examNumber,
+        states: filters.states,
+        subDomain: filters.subDomain,
+        totalProgressRecords: userProgressDocs.length,
+        progressSample: userProgressDocs.slice(0, 3).map(p => ({
+          questionId: p.questionId.toString(),
+          state: p.state,
+          wrongCount: p.wrongCount,
+          rightCount: p.rightCount
+        }))
+      });
+      
+      // TEMPORARY: Log detailed user info to help identify the real user ID
+      console.log('🚨 TEMPORARY DEBUG - User identification:', {
+        userId,
+        userIdLength: userId.length,
+        userIdType: typeof userId,
+        examNumber: filters.examNumber,
+        subDomain: filters.subDomain,
+        states: filters.states,
+        timestamp: new Date().toISOString()
+      });
+      
       throw new NotFoundError(`No questions match the selected filters. Try different states or subdomains for ${filters.examNumber}.`);
     }
     

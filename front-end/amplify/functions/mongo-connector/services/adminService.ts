@@ -156,9 +156,9 @@ export async function confirmUser(userEmail: string, username: string, logger: L
 }
 
 /**
- * Delete a user
+ * Delete a user completely (from Cognito and database)
  */
-export async function deleteUser(userEmail: string, username: string, logger: Logger): Promise<boolean> {
+export async function deleteUser(userEmail: string, username: string, logger: Logger, db?: any): Promise<boolean> {
   logger.logEntry('deleteUser', { userEmail, username });
   
   if (!(await isAdmin(userEmail))) {
@@ -167,14 +167,66 @@ export async function deleteUser(userEmail: string, username: string, logger: Lo
   }
   
   try {
+    // First, get the user's Cognito sub (user ID) before deletion
+    let cognitoUserId = '';
+    try {
+      const getUserCommand = new AdminGetUserCommand({
+        UserPoolId: getUserPoolId(),
+        Username: username,
+      });
+      const userResponse = await cognitoClient.send(getUserCommand);
+      const subAttr = userResponse.UserAttributes?.find(attr => attr.Name === 'sub');
+      cognitoUserId = subAttr?.Value || '';
+      logger.logInfo('Found user Cognito ID', { username, cognitoUserId });
+    } catch (getUserError) {
+      logger.logError('Failed to get user details before deletion', getUserError as Error, { username });
+    }
+    
+    // Delete from Cognito
     const command = new AdminDeleteUserCommand({
       UserPoolId: getUserPoolId(),
       Username: username,
     });
     
     await cognitoClient.send(command);
+    logger.logInfo('User deleted from Cognito', { username });
     
-    logger.logInfo('User deleted successfully', { username });
+    // Clean up database records if we have the database connection and user ID
+    if (db && cognitoUserId) {
+      try {
+        const userProgress = db.collection('userProgress');
+        const quizSessions = db.collection('quizSessions');
+        
+        // Delete user progress records
+        const progressResult = await userProgress.deleteMany({ userId: cognitoUserId });
+        logger.logInfo('Deleted user progress records', { 
+          username, 
+          cognitoUserId, 
+          deletedCount: progressResult.deletedCount 
+        });
+        
+        // Delete quiz sessions
+        const sessionsResult = await quizSessions.deleteMany({ userId: cognitoUserId });
+        logger.logInfo('Deleted user quiz sessions', { 
+          username, 
+          cognitoUserId, 
+          deletedCount: sessionsResult.deletedCount 
+        });
+        
+      } catch (dbError) {
+        logger.logError('Failed to clean up database records', dbError as Error, { 
+          username, 
+          cognitoUserId 
+        });
+        // Don't throw here - Cognito deletion succeeded, database cleanup is secondary
+      }
+    } else {
+      logger.logInfo('Skipping database cleanup - no DB connection or user ID', { 
+        hasDb: !!db, 
+        hasCognitoUserId: !!cognitoUserId 
+      });
+    }
+    
     logger.logExit('deleteUser', { success: true });
     return true;
   } catch (error) {

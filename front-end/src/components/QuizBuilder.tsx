@@ -97,6 +97,15 @@ function QuizBuilder() {
         states: selectedStates,
       });
       setQuestionCount(data || 0);
+      
+      // Debug: Log the request details
+      console.log('🔍 Question count request:', {
+        examNumber: selectedExam,
+        subDomain: selectedSubdomain || 'All',
+        states: selectedStates,
+        result: data || 0
+      });
+      
     } catch (err) {
       console.error('Error getting question count:', err);
     }
