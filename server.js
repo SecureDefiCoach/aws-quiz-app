@@ -2,6 +2,7 @@
 
 const express = require('express');
 const quizRoutes = require('./routes/quizRoutes');
+const memorizationRoutes = require('./routes/memorizationRoutes');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const { logger } = require('./utils/logger'); // Our custom logger
@@ -9,6 +10,10 @@ const { logger } = require('./utils/logger'); // Our custom logger
 require('./models/Question');
 require('./models/UserProgress');
 require('./models/User');
+require('./models/MemorizationCollection');
+require('./models/MemorizationContent');
+require('./models/MemorizationProgress');
+require('./models/MemorizationSyncLog');
 // --- CONFIGURATION ---
 dotenv.config();
 const app = express();
@@ -18,7 +23,8 @@ const MONGO_URI = process.env.MONGO_URI;
 // --- MIDDLEWARE ---
 app.use(express.json()); // Allows parsing JSON requests
 app.use(express.urlencoded({ extended: true })); // Helps with form data
-app.use('/api', quizRoutes); // 2. USE ROUTES (This is the line that was missing!)
+app.use('/api', quizRoutes); // Quiz routes
+app.use('/api/memorization', memorizationRoutes); // Memorization routes
 // --- DATABASE CONNECTION ---
 async function connectDB() {
     try {
