@@ -436,7 +436,11 @@ export async function startQuiz(
       if (q.optionD) options.push({ letter: 'D', text: q.optionD });
       if (q.optionE) options.push({ letter: 'E', text: q.optionE });
       if (q.optionF) options.push({ letter: 'F', text: q.optionF });
-      
+
+      // Shuffle options at session creation so each session gets a unique order,
+      // preventing position memorization across retakes.
+      const shuffledOptions = shuffleArray(options);
+
       return {
         questionId: q._id.toString(),
         rowNum: index + 1,
@@ -444,7 +448,7 @@ export async function startQuiz(
         examName: q.examName || filters.examName,
         subDomain: q.subDomain,
         question: q.questionText,
-        options,
+        options: shuffledOptions,
         answer: q.answer || '',
         explanation: q.explanation || '',
         isMulti: (q.answer || '').includes(','),
@@ -532,14 +536,11 @@ export async function getCurrentQuestion(
     const questions = db.collection('questions');
     const questionDoc = await questions.findOne({ _id: new ObjectId(currentQ.questionId) });
     
-    // Shuffle options for display
-    const shuffledOptions = shuffleArray(currentQ.options) as QuestionOption[];
-    
     const result: QuestionData = {
       questionNumber: session.currentIndex + 1,
       total: session.questions.length,
       question: currentQ.question,
-      options: shuffledOptions,
+      options: currentQ.options,
       isMulti: currentQ.isMulti,
       questionType: currentQ.questionType,
       rowNum: currentQ.rowNum,
