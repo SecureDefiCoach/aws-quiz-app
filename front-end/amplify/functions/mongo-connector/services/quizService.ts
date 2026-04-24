@@ -215,50 +215,51 @@ export async function getQuestionCount(
       matchCriteria.subDomainNum = filters.subDomain;
     }
     
-    // Get mastered question IDs for this user
-    const masteredQuestions = await userProgress.find({
-      userId,
-      state: 'MASTERED'
-    }).toArray();
-    
-    const masteredIds = masteredQuestions.map(p => new ObjectId(p.questionId));
-    
-    // Exclude mastered questions
-    if (masteredIds.length > 0) {
-      matchCriteria._id = { $nin: masteredIds };
+    const hasEverWrongFilter = filters.states.includes('EVER_WRONG');
+
+    // Exclude mastered questions unless EVER_WRONG is selected
+    if (!hasEverWrongFilter) {
+      const masteredQuestions = await userProgress.find({
+        userId,
+        state: 'MASTERED'
+      }).toArray();
+
+      const masteredIds = masteredQuestions.map(p => new ObjectId(p.questionId));
+
+      if (masteredIds.length > 0) {
+        matchCriteria._id = { $nin: masteredIds };
+      }
     }
-    
+
     // Get user progress for state filtering
     const progressMap = new Map();
     const userProgressDocs = await userProgress.find({ userId }).toArray();
     userProgressDocs.forEach(p => {
       progressMap.set(p.questionId.toString(), p);
     });
-    
+
     // Fetch all matching questions
     const allQuestions = await questions.find(matchCriteria).toArray();
-    
+
     // Filter by state
     const filteredQuestions = allQuestions.filter(q => {
       const qId = q._id.toString();
       const progress = progressMap.get(qId);
-      
+
       if (!progress) {
-        // No progress = NEW
         return filters.states.includes('NEW');
       }
-      
-      // Check for EVER_WRONG filter
-      if (filters.states.includes('EVER_WRONG') && progress.wrongCount > 0) {
+
+      if (hasEverWrongFilter && progress.wrongCount > 0) {
         return true;
       }
-      
-      // Check for regular state filters
+
+      // For regular state filters, skip MASTERED since those are normally excluded
       return filters.states.includes(progress.state);
     });
-    
+
     const count = filteredQuestions.length;
-    
+
     logger.logExit('getQuestionCount', { count });
     return count;
     
@@ -336,43 +337,44 @@ export async function startQuiz(
       matchCriteria.subDomainNum = filters.subDomain;
     }
     
-    // Get mastered question IDs to exclude
-    const masteredQuestions = await userProgress.find({
-      userId,
-      state: 'MASTERED'
-    }).toArray();
-    
-    const masteredIds = masteredQuestions.map(p => new ObjectId(p.questionId));
-    if (masteredIds.length > 0) {
-      matchCriteria._id = { $nin: masteredIds };
+    const hasEverWrongFilter = filters.states.includes('EVER_WRONG');
+
+    // Exclude mastered questions unless EVER_WRONG is selected
+    if (!hasEverWrongFilter) {
+      const masteredQuestions = await userProgress.find({
+        userId,
+        state: 'MASTERED'
+      }).toArray();
+
+      const masteredIds = masteredQuestions.map(p => new ObjectId(p.questionId));
+      if (masteredIds.length > 0) {
+        matchCriteria._id = { $nin: masteredIds };
+      }
     }
-    
+
     // Get user progress for state filtering
     const progressMap = new Map();
     const userProgressDocs = await userProgress.find({ userId }).toArray();
     userProgressDocs.forEach(p => {
       progressMap.set(p.questionId.toString(), p);
     });
-    
+
     // Fetch all matching questions
     const allQuestions = await questions.find(matchCriteria).toArray();
-    
+
     // Filter by state
     const filteredQuestions = allQuestions.filter(q => {
       const qId = q._id.toString();
       const progress = progressMap.get(qId);
-      
+
       if (!progress) {
-        // No progress = NEW
         return filters.states.includes('NEW');
       }
-      
-      // Check for EVER_WRONG filter
-      if (filters.states.includes('EVER_WRONG') && progress.wrongCount > 0) {
+
+      if (hasEverWrongFilter && progress.wrongCount > 0) {
         return true;
       }
-      
-      // Check for regular state filters
+
       return filters.states.includes(progress.state);
     });
     
