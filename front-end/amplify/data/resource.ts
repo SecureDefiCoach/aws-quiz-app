@@ -35,6 +35,9 @@ const schema = a.schema({
     text: a.string().required(),
   }),
   
+  // countRight/countWrong = user's LIFETIME stats for this specific question
+  // (from userProgress), not session running totals. Session totals are only
+  // exposed in AnswerFeedback.summary at end-of-quiz.
   QuestionData: a.customType({
     questionNumber: a.integer().required(),
     total: a.integer().required(),
@@ -46,8 +49,6 @@ const schema = a.schema({
     subDomain: a.string().required(),
     countRight: a.integer().required(),
     countWrong: a.integer().required(),
-    sessionCorrect: a.integer().required(),
-    sessionWrong: a.integer().required(),
     originalNumber: a.string().required(),
     markType: a.integer().required(),
   }),

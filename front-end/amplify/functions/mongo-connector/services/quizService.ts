@@ -44,6 +44,11 @@ export interface QuizSession {
   subDomain: string;
 }
 
+// QuestionData returned by getCurrentQuestion.
+// countRight/countWrong are the user's LIFETIME stats for THIS SPECIFIC QUESTION
+// (from the userProgress collection), snapshotted when the session was created.
+// Session-level running totals are intentionally excluded here — they belong
+// only in the end-of-quiz AnswerFeedback.summary, never on individual question cards.
 export interface QuestionData {
   questionNumber: number;
   total: number;
@@ -55,8 +60,6 @@ export interface QuestionData {
   subDomain: string;
   countRight: number;
   countWrong: number;
-  sessionCorrect: number;
-  sessionWrong: number;
   originalNumber: string;
   markType: number;
 }
@@ -455,7 +458,6 @@ export async function startQuiz(
         explanation: q.explanation || '',
         isMulti: (q.answer || '').includes(','),
         questionType: 0,
-        // Per-question lifetime stats from userProgress — displayed on the quiz card, not session totals
         countRight: progress?.rightCount || 0,
         countWrong: progress?.wrongCount || 0,
         originalNumber: q.originalNumber || ''
@@ -548,11 +550,8 @@ export async function getCurrentQuestion(
       questionType: currentQ.questionType,
       rowNum: currentQ.rowNum,
       subDomain: currentQ.subDomain,
-      // Per-question lifetime stats — the quiz card displays these, not session totals
       countRight: currentQ.countRight,
       countWrong: currentQ.countWrong,
-      sessionCorrect: session.correctCount,  // retained for API schema but not displayed
-      sessionWrong: session.wrongCount,       // retained for API schema but not displayed
       originalNumber: currentQ.originalNumber,
       markType: questionDoc?.markType || 0
     };
