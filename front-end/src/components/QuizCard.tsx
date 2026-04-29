@@ -116,7 +116,6 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
 
       if (data) {
         setFeedback(data as AnswerFeedback);
-        // Show explanation expanded if wrong, collapsed if correct
         setShowExplanation(!data.isCorrect);
       }
     } catch (err) {
@@ -216,8 +215,8 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
             Question {question.questionNumber} of {question.total}
           </h3>
           <div className="quiz-stats">
-            <span className="stat-correct">✓ {question.sessionCorrect}</span>
-            <span className="stat-wrong">✗ {question.sessionWrong}</span>
+            <span className="stat-correct">✓ {question.countRight}</span>
+            <span className="stat-wrong">✗ {question.countWrong}</span>
           </div>
         </div>
 
