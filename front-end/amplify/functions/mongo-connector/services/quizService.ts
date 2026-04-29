@@ -849,15 +849,9 @@ export async function getDashboardStats(
     // Get all questions matching exam filter
     const allQuestions = await questions.find(examFilter).toArray();
     
-    // Get user progress for these questions
-    const questionIds = allQuestions.map(q => q._id);
-    const progressRecords = await userProgress.find({
-      userId,
-      questionId: { $in: questionIds }
-    }).toArray();
-    
-    // Create progress map for quick lookup
+    // Get user progress (type-agnostic string comparison, consistent with other queries)
     const progressMap = new Map();
+    const progressRecords = await userProgress.find({ userId }).toArray();
     progressRecords.forEach(p => {
       progressMap.set(p.questionId.toString(), p);
     });
