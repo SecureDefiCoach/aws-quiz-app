@@ -455,6 +455,7 @@ export async function startQuiz(
         explanation: q.explanation || '',
         isMulti: (q.answer || '').includes(','),
         questionType: 0,
+        // Per-question lifetime stats from userProgress — displayed on the quiz card, not session totals
         countRight: progress?.rightCount || 0,
         countWrong: progress?.wrongCount || 0,
         originalNumber: q.originalNumber || ''
@@ -547,10 +548,11 @@ export async function getCurrentQuestion(
       questionType: currentQ.questionType,
       rowNum: currentQ.rowNum,
       subDomain: currentQ.subDomain,
+      // Per-question lifetime stats — the quiz card displays these, not session totals
       countRight: currentQ.countRight,
       countWrong: currentQ.countWrong,
-      sessionCorrect: session.correctCount,
-      sessionWrong: session.wrongCount,
+      sessionCorrect: session.correctCount,  // retained for API schema but not displayed
+      sessionWrong: session.wrongCount,       // retained for API schema but not displayed
       originalNumber: currentQ.originalNumber,
       markType: questionDoc?.markType || 0
     };

@@ -21,10 +21,12 @@ interface QuestionData {
   questionType: number;
   rowNum: number;
   subDomain: string;
+  // Per-question lifetime stats from userProgress — NOT session totals.
+  // These track how many times this specific question has been answered right/wrong across all sessions.
   countRight: number;
   countWrong: number;
-  sessionCorrect: number;
-  sessionWrong: number;
+  sessionCorrect: number;  // unused — kept for API compatibility
+  sessionWrong: number;    // unused — kept for API compatibility
   originalNumber: string;
 }
 
@@ -214,6 +216,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
           <h3>
             Question {question.questionNumber} of {question.total}
           </h3>
+          {/* Per-question lifetime right/wrong counts, not session totals */}
           <div className="quiz-stats">
             <span className="stat-correct">✓ {question.countRight}</span>
             <span className="stat-wrong">✗ {question.countWrong}</span>
