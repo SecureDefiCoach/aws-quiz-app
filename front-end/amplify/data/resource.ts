@@ -45,6 +45,7 @@ const schema = a.schema({
     options: a.ref('QuestionOption').array().required(),
     isMulti: a.boolean().required(),
     questionType: a.integer().required(),
+    questionId: a.id().required(),
     rowNum: a.integer().required(),
     subDomain: a.string().required(),
     countRight: a.integer().required(),
