@@ -11,7 +11,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // --- CONFIGURATION ---
 const MONGO_URI = process.env.MONGO_URI;
-const CSV_FILE_PATH = path.resolve(__dirname, '../data/isaca-aaia_v2.csv'); // Use the corrected file
+const CSV_FILE_PATH = '/Users/tristanmarvin/Claude/Projects/Certifications/ISACA-AAIA/AAIA_Study_Questions.csv'; // v3
 
 // --- DATABASE CONNECTION (Similar to server.js) ---
 async function connectDB() {
@@ -72,22 +72,23 @@ async function importAAIAData() {
     fs.createReadStream(CSV_FILE_PATH)
         .pipe(csv())
         .on('data', (data) => {
-            // Map CSV columns to MongoDB fields
+            // Map CSV columns to MongoDB fields (v3 format: QuestionText, OptionA, TopicName, etc.)
+            const isV3 = data['QuestionText'] !== undefined;
             const newDoc = {
-                questionText: data['question'],
-                optionA: data['option A'],
-                optionB: data['option B'],
-                optionC: data['option C'],
-                optionD: data['option D'],
-                optionE: data['option E'] || '',
-                optionF: data['option F'] || '',
-                answer: data['answer'],
-                explanation: data['_Explanation'],
-                examNumber: data['_ExamNumber'],
-                examName: data['_ExamName'],
-                subDomainNum: data['_SubDomainNum'],
-                subDomain: data['_SubDomainName'],
-                originalNumber: data['_OriginalNumber'],
+                questionText: isV3 ? data['QuestionText'] : data['question'],
+                optionA: isV3 ? data['OptionA'] : data['option A'],
+                optionB: isV3 ? data['OptionB'] : data['option B'],
+                optionC: isV3 ? data['OptionC'] : data['option C'],
+                optionD: isV3 ? data['OptionD'] : data['option D'],
+                optionE: isV3 ? (data['OptionE'] || '') : (data['option E'] || ''),
+                optionF: isV3 ? (data['OptionF'] || '') : (data['option F'] || ''),
+                answer: isV3 ? data['Answer'] : data['answer'],
+                explanation: isV3 ? (data['Explanation'] || '') : data['_Explanation'],
+                examNumber: isV3 ? 'ISACA-AAIA' : data['_ExamNumber'],
+                examName: isV3 ? 'ISACA Certified Artificial Intelligence Auditor' : data['_ExamName'],
+                subDomainNum: isV3 ? '' : data['_SubDomainNum'],
+                subDomain: isV3 ? data['TopicName'] : data['_SubDomainName'],
+                originalNumber: isV3 ? data['QuestionNumber'] : data['_OriginalNumber'],
             };
 
             results.push(newDoc);

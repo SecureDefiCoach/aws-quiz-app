@@ -56,6 +56,7 @@ export interface QuestionData {
   options: QuestionOption[];
   isMulti: boolean;
   questionType: number;
+  questionId: string;
   rowNum: number;
   subDomain: string;
   countRight: number;
@@ -548,6 +549,7 @@ export async function getCurrentQuestion(
       options: currentQ.options,
       isMulti: currentQ.isMulti,
       questionType: currentQ.questionType,
+      questionId: currentQ.questionId,
       rowNum: currentQ.rowNum,
       subDomain: currentQ.subDomain,
       countRight: currentQ.countRight,

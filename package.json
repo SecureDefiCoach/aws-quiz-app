@@ -8,7 +8,9 @@
     "dev": "nodemon server.js",
     "db:seed": "node scripts/import-questions.js",
     "db:add-aaia": "node scripts/import-aaia-questions.js",
-    "db:replace-aaia": "node scripts/import-aaia-questions.js --clear-aaia"
+    "db:replace-aaia": "node scripts/import-aaia-questions.js --clear-aaia",
+    "db:generate-explanations": "node scripts/generate-explanations.js",
+    "db:generate-explanations:force": "node scripts/generate-explanations.js --force"
   },
   "keywords": [
     "nodejs",
@@ -19,12 +21,15 @@
   "author": "@Aemjk4h2",
   "license": "ISC",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^8.0.3",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^3.11.174",
     "winston": "^3.11.0",
     "winston-daily-rotate-file": "^4.7.1"
   },

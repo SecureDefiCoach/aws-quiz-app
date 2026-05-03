@@ -22,6 +22,7 @@ interface QuestionData {
   options: QuestionOption[];
   isMulti: boolean;
   questionType: number;
+  questionId: string;
   rowNum: number;
   subDomain: string;
   countRight: number;
@@ -143,7 +144,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     try {
       const client = generateClient<Schema>();
       await client.mutations.setQuestionMark({
-        questionId: question.rowNum.toString(),
+        questionId: question.questionId,
         markType: newMarkType,
       });
     } catch (err) {
@@ -159,7 +160,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
     try {
       const client = generateClient<Schema>();
       await client.mutations.markAsMastered({
-        questionId: question.rowNum.toString(),
+        questionId: question.questionId,
       });
       // Move to next question
       loadQuestion();
