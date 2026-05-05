@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "us-east-1_xhUGCVYin",
+    "user_pool_id": "us-east-1_myIRjqPGz",
     "aws_region": "us-east-1",
-    "user_pool_client_id": "g36m4g17hq6raqjc6r3r58acv",
-    "identity_pool_id": "us-east-1:4b6848f3-a413-49e4-843c-dd70b580645e",
+    "user_pool_client_id": "7oh1fi4mnruho81vauoi3uojir",
+    "identity_pool_id": "us-east-1:662f7964-63dd-47f5-bb9f-57ef9772cf34",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -26,12 +26,10 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://iejg3hbka5byhcegl5nshvzpam.appsync-api.us-east-1.amazonaws.com/graphql",
+    "url": "https://fohxxfqbo5dlxkgyh5kfxff5xm.appsync-api.us-east-1.amazonaws.com/graphql",
     "aws_region": "us-east-1",
-    "api_key": "da2-xhjodyjt75g5rmlzrybl3zlxfm",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
-      "API_KEY",
       "AWS_IAM"
     ],
     "model_introspection": {
@@ -90,7 +88,7 @@
             "sessionId": {
               "name": "sessionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true,
               "attributes": []
             },
@@ -191,6 +189,13 @@
               "isRequired": true,
               "attributes": []
             },
+            "questionId": {
+              "name": "questionId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
             "rowNum": {
               "name": "rowNum",
               "isArray": false,
@@ -214,20 +219,6 @@
             },
             "countWrong": {
               "name": "countWrong",
-              "isArray": false,
-              "type": "Int",
-              "isRequired": true,
-              "attributes": []
-            },
-            "sessionCorrect": {
-              "name": "sessionCorrect",
-              "isArray": false,
-              "type": "Int",
-              "isRequired": true,
-              "attributes": []
-            },
-            "sessionWrong": {
-              "name": "sessionWrong",
               "isArray": false,
               "type": "Int",
               "isRequired": true,
@@ -612,7 +603,7 @@
             "sessionId": {
               "name": "sessionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true
             }
           }
@@ -664,13 +655,13 @@
             "sessionId": {
               "name": "sessionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true
             },
             "questionId": {
               "name": "questionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true
             },
             "selectedLetters": {
@@ -691,7 +682,7 @@
             "questionId": {
               "name": "questionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true
             }
           }
@@ -705,7 +696,7 @@
             "questionId": {
               "name": "questionId",
               "isArray": false,
-              "type": "ID",
+              "type": "String",
               "isRequired": true
             },
             "markType": {
