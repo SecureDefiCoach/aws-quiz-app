@@ -213,8 +213,6 @@ export const data = defineData({
   authorizationModes: {
     defaultAuthorizationMode: 'userPool',  // Use Cognito authentication
     // Keep API key as secondary for development/testing
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    
   },
 });
