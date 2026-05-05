@@ -23,7 +23,7 @@ const schema = a.schema({
   }),
   
   QuizSession: a.customType({
-    sessionId: a.id().required(),
+    sessionId: a.string().required(),
     total: a.integer().required(),
     examNumber: a.string().required(),
     examName: a.string().required(),
@@ -45,7 +45,7 @@ const schema = a.schema({
     options: a.ref('QuestionOption').array().required(),
     isMulti: a.boolean().required(),
     questionType: a.integer().required(),
-    questionId: a.id().required(),
+    questionId: a.string().required(),
     rowNum: a.integer().required(),
     subDomain: a.string().required(),
     countRight: a.integer().required(),
@@ -141,7 +141,7 @@ const schema = a.schema({
     .handler(a.handler.function(mongoConnector)),
   
   getCurrentQuestion: a.query()
-    .arguments({ sessionId: a.id().required() })
+    .arguments({ sessionId: a.string().required() })
     .returns(a.ref('QuestionData'))
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),
@@ -169,8 +169,8 @@ const schema = a.schema({
   
   submitAnswer: a.mutation()
     .arguments({
-      sessionId: a.id().required(),
-      questionId: a.id().required(),
+      sessionId: a.string().required(),
+      questionId: a.string().required(),
       selectedLetters: a.string().array().required(),
     })
     .returns(a.ref('AnswerFeedback'))
@@ -178,14 +178,14 @@ const schema = a.schema({
     .handler(a.handler.function(mongoConnector)),
   
   markAsMastered: a.mutation()
-    .arguments({ questionId: a.id().required() })
+    .arguments({ questionId: a.string().required() })
     .returns(a.boolean())
     .authorization(allow => [allow.authenticated()])
     .handler(a.handler.function(mongoConnector)),
-  
+
   setQuestionMark: a.mutation()
-    .arguments({ 
-      questionId: a.id().required(),
+    .arguments({
+      questionId: a.string().required(),
       markType: a.integer().required()
     })
     .returns(a.boolean())

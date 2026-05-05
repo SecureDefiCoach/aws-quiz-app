@@ -45,6 +45,14 @@ interface AnswerFeedback {
   };
 }
 
+function extractErrorMessage(err: unknown, context: string): string {
+  const e = err as any;
+  const details = e?.errors?.[0]?.message || e?.message || String(err);
+  const fullMsg = `${context}: ${details}`;
+  console.error(fullMsg, { raw: err });
+  return fullMsg;
+}
+
 function QuizCard({ sessionId, onComplete }: QuizCardProps) {
   const [question, setQuestion] = useState<QuestionData | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
@@ -79,8 +87,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       setQuestion(data as QuestionData);
       setMarkType(data.markType || 0);
     } catch (err) {
-      console.error('Error loading question:', err);
-      setError('Failed to load question');
+      setError(extractErrorMessage(err, 'Load question failed'));
     } finally {
       setLoading(false);
     }
@@ -112,7 +119,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       const client = generateClient<Schema>();
       const { data } = await client.mutations.submitAnswer({
         sessionId,
-        questionId: question.rowNum.toString(),
+        questionId: question.questionId,
         selectedLetters: selectedAnswers,
       });
 
@@ -121,8 +128,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
         setShowExplanation(!data.isCorrect);
       }
     } catch (err) {
-      console.error('Error submitting answer:', err);
-      setError('Failed to submit answer');
+      setError(extractErrorMessage(err, 'Submit answer failed'));
     } finally {
       setLoading(false);
     }
@@ -148,8 +154,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
         markType: newMarkType,
       });
     } catch (err) {
-      console.error('Error setting mark:', err);
-      // Revert on error
+      console.error(extractErrorMessage(err, 'Set mark failed'));
       setMarkType((question as any).markType || 0);
     }
   };
@@ -165,8 +170,7 @@ function QuizCard({ sessionId, onComplete }: QuizCardProps) {
       // Move to next question
       loadQuestion();
     } catch (err) {
-      console.error('Error marking as mastered:', err);
-      setError('Failed to mark as mastered');
+      setError(extractErrorMessage(err, 'Mark as mastered failed'));
     }
   };
 
